@@ -18,6 +18,9 @@ class CreateCompaniesTable extends Migration
             $table->text('description_en')->nullable();
             $table->string('city_en')->nullable();
             $table->text('address_en')->nullable();
+            $table->string('opens_at')->nullable(); // company open, close time
+            $table->string('closes_at')->nullable();
+            $table->string('holidays')->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
             $table->string('latitudeDelta')->nullable();
