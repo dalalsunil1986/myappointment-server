@@ -9,6 +9,7 @@ class Employee extends BaseModel
 
     protected $table = 'employees';
     protected $guarded = ['id'];
+    public $timestamps = false;
 
 }
 

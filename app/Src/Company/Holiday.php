@@ -4,10 +4,9 @@ namespace App\Src\Company;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class Holiday extends Model
 {
-
-    protected $table = 'companies';
+    protected $table = 'holidays';
     protected $guarded = ['id'];
     public $timestamps = false;
 

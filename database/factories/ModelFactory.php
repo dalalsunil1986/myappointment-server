@@ -17,16 +17,16 @@ $factory->define(\App\Src\User\User::class, function (Faker\Generator $faker) {
         'email' => $faker->email,
         'password' => bcrypt('password'),
         'remember_token' => str_random(10),
-        'image' => $faker->image($width = 640, $height = 480),
+        'admin' => 0,
+        'active' => 1
     ];
 });
 
 $factory->define(\App\Src\Category\Category::class, function (Faker\Generator $faker) {
     return [
-        'name_en' => randomElement(['spa','salon','clinic']),
-        'description_en' => $faker->sentences(5),
-        'image' => $faker->image($width = 640, $height = 480)
-
+        'name_en' => $faker->randomElement(['spa','salon','clinic']),
+        'description_en' => $faker->sentence(10),
+        'image' => $faker->imageUrl($width = 640, $height = 480)
     ];
 });
 
@@ -34,23 +34,23 @@ $factory->define(\App\Src\Company\Company::class, function (Faker\Generator $fak
     return [
         'name_en' => $faker->company,
         'address_en' => $faker->address,
-        'description_en' => $faker->sentences(5),
+        'description_en' => $faker->sentence(10),
         'city_en' => $faker->city,
         'opens_at' => '8am',
         'closes_at'=> '5pm',
         'latitude' =>$faker->latitude,
         'longitude'=> $faker->longitude,
-        'image' => $faker->image($width = 640, $height = 480)
+        'image' => $faker->imageUrl($width = 640, $height = 480)
     ];
 });
 
 $factory->define(\App\Src\Service\Service::class, function (Faker\Generator $faker) {
     return [
-        'name_en' => randomElement(['spa','salon','clinic']),
+        'name_en' => $faker->randomElement(['spa','salon','clinic']),
         'parent_id' => 0,
-        'description_en' => $faker->sentences(5),
-        'duration_en' => randomElement(['1hr','2hr','30min']),
-        'image' => $faker->image($width = 640, $height = 480)
+        'description_en' => $faker->sentence(10),
+        'duration_en' => $faker->randomElement(['1hr','2hr','30min']),
+        'image' => $faker->imageUrl($width = 640, $height = 480)
     ];
 });
 
@@ -58,7 +58,7 @@ $factory->define(\App\Src\Employee\Employee::class, function (Faker\Generator $f
     return [
         'company_id' => 1,
         'name_en' => $faker->randomElement(['spa','salon','clinic']),
-        'image' => $faker->image($width = 640, $height = 480),
+        'image' => $faker->imageUrl($width = 640, $height = 480),
         'holidays'=>$faker->randomElement(['sunday','monday','tuesday','wednesday','thursday','friday','saturday'])
     ];
 });
@@ -80,3 +80,9 @@ $factory->define(\App\Src\Appointment\Appointment::class, function (Faker\Genera
     ];
 });
 
+$factory->define(\App\Src\Company\Holiday::class, function (Faker\Generator $faker) {
+    return [
+        'company_id' => 1,
+        'date' => $faker->dateTimeBetween($startDate = 'now', $endDate = '+1 month')
+    ];
+});
