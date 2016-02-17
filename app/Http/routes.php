@@ -12,6 +12,8 @@
 */
 
 Route::get('/', function () {
+    $company = App\Src\Company\Company::orderByRaw("RAND()")->first();
+    dd($company);
     return view('welcome');
 });
 

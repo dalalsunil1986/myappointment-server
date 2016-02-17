@@ -12,6 +12,9 @@ class EmployeesTableSeeder extends Seeder
     public function run()
     {
         //
-        factory(\App\Src\Employee\Employee::class,50)->create();
+        factory(\App\Src\Employee\Employee::class,10)->create()->each(function($employee){
+            $company = App\Src\Company\Company::orderByRaw("RAND()")->first();
+            $company->employees()->save($employee);
+        });
     }
 }

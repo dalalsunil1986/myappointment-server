@@ -16,6 +16,8 @@ class CreateCompanyServicesTable extends Migration
             $table->increments('id');
             $table->integer('company_id');
             $table->integer('service_id');
+            $table->decimal('price',5,2);
+            $table->string('duration_en')->nullable(); // ex: 1 hour, 2 hour, 30min etc
             $table->text('description_en')->nullable();
         });
     }

@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TimingsTableSeeder::class);
         $this->call(EmployeesTableSeeder::class);
         $this->call(HolidaysTableSeeder::class);
-        $this->call(AppointmentsTableSeeder::class);
+//        $this->call(AppointmentsTableSeeder::class);
         Model::reguard();
 
     }

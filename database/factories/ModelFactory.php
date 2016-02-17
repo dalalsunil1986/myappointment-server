@@ -49,7 +49,6 @@ $factory->define(\App\Src\Service\Service::class, function (Faker\Generator $fak
         'name_en' => $faker->randomElement(['spa','salon','clinic']),
         'parent_id' => 0,
         'description_en' => $faker->sentence(10),
-        'duration_en' => $faker->randomElement(['1hr','2hr','30min']),
         'image' => $faker->imageUrl($width = 640, $height = 480)
     ];
 });

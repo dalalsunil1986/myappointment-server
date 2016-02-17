@@ -16,9 +16,9 @@ class Company extends BaseModel
     protected $guarded = ['id'];
     public $timestamps = false;
 
-    public function user()
+    public function users()
     {
-        return $this->belongsToMany(User::class,'user_companies');
+        return $this->belongsToMany(User::class,'company_users');
     }
 
     public function categories()

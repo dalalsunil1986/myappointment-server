@@ -11,7 +11,9 @@ class HolidaysTableSeeder extends Seeder
      */
     public function run()
     {
-        //
-        factory(\App\Src\Company\Holiday::class,10)->create();
+        factory(\App\Src\Company\Holiday::class,10)->create()->each(function($holiday){
+            $company = App\Src\Company\Company::orderByRaw("RAND()")->first();
+            $company->holidays()->save($holiday);
+        });
     }
 }
