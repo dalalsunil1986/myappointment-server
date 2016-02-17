@@ -3,6 +3,7 @@
 namespace App\Src\Employee;
 
 use App\Core\BaseModel;
+use App\Src\Company\Company;
 
 class Employee extends BaseModel
 {
@@ -10,6 +11,11 @@ class Employee extends BaseModel
     protected $table = 'employees';
     protected $guarded = ['id'];
     public $timestamps = false;
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 
 }
 

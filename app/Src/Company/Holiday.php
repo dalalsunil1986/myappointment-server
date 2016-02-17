@@ -2,12 +2,16 @@
 
 namespace App\Src\Company;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Core\BaseModel;
 
-class Holiday extends Model
+class Holiday extends BaseModel
 {
     protected $table = 'holidays';
     protected $guarded = ['id'];
     public $timestamps = false;
 
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
 }

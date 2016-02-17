@@ -2,18 +2,19 @@
 
 namespace App\Src\Timing;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Core\BaseModel;
+use App\Src\Appointment\Appointment;
 
-class Timing extends Model
+class Timing extends BaseModel
 {
 
     protected $table = 'timings';
     protected $guarded = ['id'];
     public $timestamps = false;
 
-    public function companyServices()
+    public function appointments()
     {
-        return $this->belongsTo(CompanyService::class,'company_service_id');
+        return $this->hasMany(Appointment::class);
     }
 
 }
