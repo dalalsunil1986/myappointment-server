@@ -16,6 +16,7 @@ $factory->define(\App\Src\User\User::class, function (Faker\Generator $faker) {
         'name_en' => $faker->firstName,
         'email' => $faker->email,
         'password' => bcrypt('password'),
+        'api_token' => str_random(60),
         'remember_token' => str_random(10),
         'admin' => 0,
         'active' => 1
@@ -25,7 +26,7 @@ $factory->define(\App\Src\User\User::class, function (Faker\Generator $faker) {
 $factory->define(\App\Src\Category\Category::class, function (Faker\Generator $faker) {
     return [
         'name_en' => $faker->randomElement(['spa','salon','clinic']),
-        'description_en' => $faker->sentence(10),
+//        'description_en' => $faker->sentence(10),
         'image' => $faker->imageUrl($width = 640, $height = 480)
     ];
 });
@@ -34,7 +35,7 @@ $factory->define(\App\Src\Company\Company::class, function (Faker\Generator $fak
     return [
         'name_en' => $faker->company,
         'address_en' => $faker->address,
-        'description_en' => $faker->sentence(10),
+//        'description_en' => $faker->sentence(10),
         'city_en' => $faker->city,
         'opens_at' => '8am',
         'closes_at'=> '5pm',

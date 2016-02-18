@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('password', 60);
             $table->string('mobile',15);
             $table->string('activation_code')->nullable();
+            $table->string('api_token', 60)->unique();
             $table->boolean('active')->default(0);
             $table->boolean('admin')->nullable()->default(0);
             $table->rememberToken();
