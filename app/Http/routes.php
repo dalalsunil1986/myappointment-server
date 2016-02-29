@@ -11,6 +11,13 @@
 |
 */
 
+//
+Route::get('test',function(\Illuminate\Http\Request $request){
+  $user =  App\Src\User\User::where('api_token',$request->get('api_token'))->first();
+//    dd($user->load('favorites')->toArray());
+    Auth::loginUsingId($user->id);
+    dd(Auth::user());
+});
 Route::get('/', ['middleware' => 'auth',function () {
     $company = App\Src\Company\Company::orderByRaw("RAND()")->first();
     dd($company);
@@ -20,24 +27,43 @@ Route::get('/', ['middleware' => 'auth',function () {
 //Route::group(['prefix' => 'api/v1', 'middleware' => 'auth:api'], function () {
 Route::group(['prefix' => 'api/v1'], function () {
 
-    Route::get('categories/{id}', 'CategoryController@show');
-    Route::get('categories', 'CategoryController@index');
-
-    /* company */
-    Route::get('company/{id}', ['as' => 'view_company', 'uses' => 'CompanyController@show']);
-    Route::get('companies', ['uses' => 'CompanyController@index']);
-
-    /* list available timing */
-    Route::get('/timings', 'TimingController@getAvailableTimings');
-
-    /* create an appointment */
-    Route::post('appointment/make',
-        ['as' => 'create_appointment', 'uses' => 'AppointmentController@createAppointment']);
-
     /* Auth Routes */
     Route::post('auth/login', 'Auth\AuthController@postLogin');
     Route::post('auth/register', 'Auth\AuthController@postRegister');
     Route::post('auth/activate', 'Auth\AuthController@postActivate');
+    Route::post('auth/login/token', 'Auth\AuthController@loginUsingToken');
+
+    Route::get('categories', 'CategoryController@index');
+    Route::get('categories/{id}', 'CategoryController@show');
+
+    /* company */
+    Route::get('companies', 'CompanyController@index');
+    Route::get('companies/{id}', 'CompanyController@show');
+    Route::get('companies/{id}/employees', 'CompanyController@getEmployees');
+    Route::get('companies/{id}/holidays', 'CompanyController@getHolidays');
+    Route::get('companies/{companyId}/services/{serviceId}/timings', 'CompanyController@getTimings');
+
+    /* company */
+    Route::get('services', 'ServiceController@index');
+    Route::get('services/{id}', 'ServiceController@show');
+
+    Route::resource('users','UserController');
+
+    Route::get('timings', 'TimingController@index');
+
+    /* auth::api routes */
+    Route::get('favorites','ProfileController@getFavorites');
+    Route::get('appointments','ProfileController@getAppointments');
+    Route::post('appointments/create','ProfileController@createAppointment');
+    Route::post('appointments/{id}/cancel/','ProfileController@cancelAppointment');
+
+    //make favorite
+    Route::get('companies/{id}/favorite','ProfileController@favoriteCompany');
+    Route::get('companies/{id}/unfavorite','ProfileController@unFavoriteCompany');
+
+    /* create an appointment */
+    Route::post('appointment/make',
+        ['as' => 'create_appointment', 'uses' => 'AppointmentController@createAppointment']);
 
 });
 

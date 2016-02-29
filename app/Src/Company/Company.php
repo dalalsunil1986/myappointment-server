@@ -28,7 +28,7 @@ class Company extends BaseModel
 
     public function services()
     {
-        return $this->belongsToMany(Service::class,'company_services');
+        return $this->belongsToMany(Service::class,'company_services')->withPivot(['price','duration_en','description_en']);
     }
 
     public function employees()
@@ -44,6 +44,11 @@ class Company extends BaseModel
     public function appointments()
     {
         return $this->hasMany(Appointment::class);
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class,'favorites');
     }
 
 }

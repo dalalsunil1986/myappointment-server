@@ -37,8 +37,8 @@ $factory->define(\App\Src\Company\Company::class, function (Faker\Generator $fak
         'address_en' => $faker->address,
 //        'description_en' => $faker->sentence(10),
         'city_en' => $faker->city,
-        'opens_at' => '8am',
-        'closes_at'=> '5pm',
+        'opens_at' => '8:00-am',
+        'closes_at'=> '5:30-pm',
         'latitude' =>$faker->latitude,
         'longitude'=> $faker->longitude,
         'image' => $faker->imageUrl($width = 640, $height = 480)
@@ -47,7 +47,7 @@ $factory->define(\App\Src\Company\Company::class, function (Faker\Generator $fak
 
 $factory->define(\App\Src\Service\Service::class, function (Faker\Generator $faker) {
     return [
-        'name_en' => $faker->randomElement(['spa','salon','clinic']),
+        'name_en' => $faker->word,
         'parent_id' => 0,
         'description_en' => $faker->sentence(10),
         'image' => $faker->imageUrl($width = 640, $height = 480)
@@ -57,7 +57,7 @@ $factory->define(\App\Src\Service\Service::class, function (Faker\Generator $fak
 $factory->define(\App\Src\Employee\Employee::class, function (Faker\Generator $faker) {
     return [
         'company_id' => 1,
-        'name_en' => $faker->randomElement(['spa','salon','clinic']),
+        'name_en' => $faker->firstName,
         'image' => $faker->imageUrl($width = 640, $height = 480),
         'holidays'=>$faker->randomElement(['sunday','monday','tuesday','wednesday','thursday','friday','saturday'])
     ];

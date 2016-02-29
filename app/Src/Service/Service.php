@@ -23,5 +23,4 @@ class Service extends BaseModel
         return $this->hasMany(Appointment::class);
     }
 
-
 }

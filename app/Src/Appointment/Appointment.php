@@ -17,17 +17,22 @@ class Appointment extends BaseModel
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->select(['id','name_en']);
     }
 
     public function company()
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Company::class)->select(['id','name_en','city_en']);
     }
 
     public function service()
     {
-        return $this->belongsTo(Service::class);
+        return $this->belongsTo(Service::class)->select(['id','name_en']);
+    }
+
+    public function companyService()
+    {
+//        return $this->service->companies()->withPivot(['price','duration_en'])->where('company_services.service_id',$this->service->id)->first()->select(['id']);
     }
 
     public function employee()

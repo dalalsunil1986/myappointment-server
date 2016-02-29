@@ -19,6 +19,7 @@ class CreateAppointmentsTable extends Migration
             $table->integer('service_id');
             $table->integer('timing_id');
             $table->integer('employee_id')->nullable();
+            $table->timestamp('date');
             $table->enum('status',['confirmed','pending','cancelled'])->default('pending');
             $table->timestamps();
             $table->softDeletes();

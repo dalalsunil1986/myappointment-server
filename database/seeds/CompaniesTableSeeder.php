@@ -17,6 +17,7 @@ class CompaniesTableSeeder extends Seeder
         factory(\App\Src\Company\Company::class, 20)->create()->each(function($company) use ($categories,$users) {
             $company->categories()->sync([$categories[array_rand($categories)]]);
             $company->users()->sync([$users[array_rand($users)]]);
+            $company->favorites()->sync([$users[array_rand($users)]]);
         });
     }
 }

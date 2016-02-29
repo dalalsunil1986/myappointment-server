@@ -22,4 +22,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Company::class,'company_users');
     }
 
+    public function favorites()
+    {
+        return $this->belongsToMany(Company::class,'favorites');
+    }
+
 }
