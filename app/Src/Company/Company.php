@@ -8,6 +8,7 @@ use App\Src\Category\Category;
 use App\Src\Employee\Employee;
 use App\Src\Service\Service;
 use App\Src\User\User;
+use Illuminate\Support\Facades\Auth;
 
 class Company extends BaseModel
 {
@@ -51,4 +52,9 @@ class Company extends BaseModel
         return $this->belongsToMany(User::class,'favorites');
     }
 
+    public function hasFavorited()
+    {
+        return true;
+//        return $this->favorites();
+    }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Src\Company\Company;
 use App\Src\Service\Service;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
@@ -31,13 +31,27 @@ class CompanyController extends Controller
 
     public function index()
     {
-        $companies = $this->companyRepository->with(['services','employees'])->get();
+        $userID = Auth::guard('api')->user() ? Auth::guard('api')->user()->id  :'0';
+        $companies = $this->companyRepository->with(['services','employees','favorites'])->get();
+        $companies->map(function($company) use ($userID) {
+            if($company->favorites->contains($userID)) {
+                $company->isFavorited = true;
+            } else {
+                $company->isFavorited = false;
+            }
+        });
         return response()->json(['data'=>$companies]);
     }
 
     public function show($id)
     {
+        $userID = Auth::guard('api')->user() ? Auth::guard('api')->user()->id  :'0';
         $company = $this->companyRepository->with(['services','employees'])->find($id);
+        if($company->favorites->contains($userID)) {
+            $company->isFavorited = true;
+        } else {
+            $company->isFavorited = false;
+        }
         return response()->json(['data'=>$company]);
     }
 

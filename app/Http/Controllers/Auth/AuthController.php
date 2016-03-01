@@ -98,7 +98,7 @@ class AuthController extends Controller
             'email' => strtolower($request->json('email')),
             'mobile' => (int)$request->json('mobile'),
             'password' => bcrypt($request->json('password')),
-            'active' => 0
+            'active' => 1
         ]);
 
         try {

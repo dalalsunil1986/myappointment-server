@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Src\Category\Category;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -22,7 +23,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = $this->categoryRepository->with(['companies'])->get();
+        $categories = $this->categoryRepository->all();
         return response()->json(['data'=>$categories]);
     }
 
@@ -33,8 +34,17 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = $this->categoryRepository->with(['companies'])->find($id);
+        $userID = Auth::guard('api')->user() ? Auth::guard('api')->user()->id  :'0';
+        $category = $this->categoryRepository->with(['companies.favorites'])->find($id);
+        $category->companies->map(function($company) use ($userID) {
+            if ($company->favorites->contains($userID)) {
+                $company->isFavorited = true;
+            } else {
+                $company->isFavorited = false;
+            }
+        });
         return response()->json(['data'=>$category]);
+
     }
 
 }

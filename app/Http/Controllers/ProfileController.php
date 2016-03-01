@@ -29,8 +29,11 @@ class ProfileController extends Controller
     public function getFavorites(Request $request)
     {
         $user = Auth::guard('api')->user()->load('favorites');
-        $favorites =  $user->favorites;
-        return response()->json(['data' => $favorites]);
+        $companies =  $user->favorites;
+        $companies->map(function($company) use ($user) {
+            $company->isFavorited = true;
+        });
+        return response()->json(['data' => $companies]);
     }
 
     public function getAppointments(Request $request)
@@ -78,11 +81,13 @@ class ProfileController extends Controller
         return response()->json(['success'=>false,'message'=>'invalid user']);
     }
 
-    public function cancelAppointment(Request $request,$appointmentID)
+    public function cancelAppointment(Request $request)
     {
         //create appointment
         $user = Auth::guard('api')->user();
         if($user) {
+            $appointment = $this->appointmentRepository->find($request->json('id'));
+//            $appointment->delete();
             return response()->json(['success'=>true]);
         }
         return response()->json(['success'=>false,'message'=>'invalid operation']);
@@ -106,8 +111,8 @@ class ProfileController extends Controller
         $company = $companyRepository->find($companyID);
         $user = Auth::guard('api')->user();
         if($user) {
-            $user->favorites()->sync([$company->id]);
-            return response()->json(['success'=>true,'message'=>'no appointment slots available']);
+            $user->favorites()->detach($company->id);
+            return response()->json(['success'=>true]);
         }
         return response()->json(['success'=>false,'message'=>'invalid operation']);
     }
