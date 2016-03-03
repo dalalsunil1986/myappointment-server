@@ -57,11 +57,11 @@ class ProfileController extends Controller
     {
         //create appointment
         $user = Auth::guard('api')->user();
-        $timingID = $request->get('timing_id');
-        $companyID = $request->get('company_id');
-        $serviceID = $request->get('service_id');
-        $employee_id = $request->get('employee_id') ? : 0;
-        $date = $request->get('date');
+        $timingID = $request->json('timing_id');
+        $companyID = $request->json('company_id');
+        $serviceID = $request->json('service_id');
+        $employee_id = $request->json('employee_id') ? : 0;
+        $date = $request->json('date');
         $date = Carbon::createFromFormat('Y-m-d', $date)->toDateString();
         if($user) {
             try {
