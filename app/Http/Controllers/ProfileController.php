@@ -62,7 +62,7 @@ class ProfileController extends Controller
         $serviceID = $request->json('service_id');
         $employee_id = $request->json('employee_id');
         $date = $request->json('date');
-        $date = Carbon::createFromFormat('Y-m-d', $date)->toDateString();
+//        $date = Carbon::createFromFormat('Y-m-d', $date)->toDateString();
         if($user) {
             try {
                 $user->appointments()->create([

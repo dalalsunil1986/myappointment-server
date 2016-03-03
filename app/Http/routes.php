@@ -45,8 +45,8 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::get('companies/markers', 'CompanyController@getMarkers');
 
     /* company */
-    Route::get('services', 'ServiceController@index');
-    Route::get('services/{id}', 'ServiceController@show');
+//    Route::get('services', 'ServiceController@index');
+//    Route::get('services/{id}', 'ServiceController@show');
 
     Route::resource('users','UserController');
 
