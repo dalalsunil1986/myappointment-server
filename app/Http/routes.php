@@ -41,7 +41,7 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::get('appointments','ProfileController@getAppointments');
 
     Route::post('appointments/make','ProfileController@makeAppointment');
-    Route::get('appointments/{id}/cancel','ProfileController@cancelAppointment');
+    Route::post('appointments/cancel','ProfileController@cancelAppointment');
 
     //make favorite
     Route::get('companies/{id}/favorite','ProfileController@favoriteCompany');

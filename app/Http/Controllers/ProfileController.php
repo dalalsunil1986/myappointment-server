@@ -86,7 +86,7 @@ class ProfileController extends Controller
         //create appointment
         $user = Auth::guard('api')->user();
         if($user) {
-            $appointment = $this->appointmentRepository->find($id);
+            $appointment = $this->appointmentRepository->find($request->json('id'));
 //            $appointment->delete();
             return response()->json(['success'=>true]);
         }
