@@ -53,7 +53,7 @@ class ProfileController extends Controller
     }
 
 
-    public function makeAppointment(Request $request)
+    public function createAppointment(Request $request)
     {
         //create appointment
         $user = Auth::guard('api')->user();
