@@ -55,7 +55,7 @@ Route::group(['prefix' => 'api/v1'], function () {
     /* auth::api routes */
     Route::get('favorites','ProfileController@getFavorites');
     Route::get('appointments','ProfileController@getAppointments');
-    Route::post('appointments/create/new',function($q){
+    Route::get('appointments/create/new',function($q){
         dd('zaal');
     });
 //    Route::post('appointments/cancel','ProfileController@cancelAppointment');
