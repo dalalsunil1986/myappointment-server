@@ -40,7 +40,7 @@ Route::group(['prefix' => 'api/v1'], function () {
 //    Route::get('favorites','ProfileController@getFavorites');
 //    Route::get('appointments','ProfileController@getAppointments');
 
-    Route::post('appointments/make',function(){
+    Route::post('appointments/{id}/make',function(){
         return 'a';
     });
 //    Route::post('appointments/cancel','ProfileController@cancelAppointment');
