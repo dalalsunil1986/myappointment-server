@@ -52,12 +52,13 @@ Route::group(['prefix' => 'api/v1'], function () {
 
     Route::get('timings', 'TimingController@index');
 
-    /* auth::api routes */
-    Route::get('favorites','ProfileController@getFavorites');
-    Route::get('appointments','ProfileController@getAppointments');
     Route::get('appointments/create/new',function($q){
         dd('zaal');
     });
+    /* auth::api routes */
+    Route::get('favorites','ProfileController@getFavorites');
+    Route::get('appointments','ProfileController@getAppointments');
+
 //    Route::post('appointments/cancel','ProfileController@cancelAppointment');
 
     //make favorite
