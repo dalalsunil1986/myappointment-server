@@ -16,7 +16,7 @@ Route::get('/', ['middleware' => 'auth',function () {
 Route::group(['prefix' => 'api/v1'], function () {
 
     /* Auth Routes */
-//    Route::post('auth/login', 'Auth\AuthController@postLogin');
+    Route::post('auth/login', 'Auth\AuthController@postLogin');
 //    Route::post('auth/register', 'Auth\AuthController@postRegister');
 //    Route::post('auth/activate', 'Auth\AuthController@postActivate');
 //    Route::post('auth/login/token', 'Auth\AuthController@loginUsingToken');
