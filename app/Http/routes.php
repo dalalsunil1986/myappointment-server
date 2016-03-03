@@ -63,8 +63,8 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::get('companies/{id}/unfavorite','ProfileController@unFavoriteCompany');
 
     /* create an appointment */
-    Route::post('appointment/make',
-        ['as' => 'create_appointment', 'uses' => 'AppointmentController@createAppointment']);
+//    Route::post('appointment/make',
+//        ['as' => 'create_appointment', 'uses' => 'AppointmentController@createAppointment']);
 
 });
 
