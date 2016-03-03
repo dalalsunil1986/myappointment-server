@@ -41,6 +41,7 @@ Route::group(['prefix' => 'api/v1'], function () {
 //    Route::get('appointments','ProfileController@getAppointments');
 
     Route::post('appointments/{id}/make','Auth\AuthController@postLogin');
+    Route::post('booking/{id}/make','Auth\AuthController@postLogin');
 //    Route::post('appointments/cancel','ProfileController@cancelAppointment');
 
     //make favorite
