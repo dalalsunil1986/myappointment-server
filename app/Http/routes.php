@@ -38,10 +38,11 @@ Route::group(['prefix' => 'api/v1'], function () {
 
     /* company */
     Route::get('companies', 'CompanyController@index');
-    Route::get('companies/{id}', 'CompanyController@show');
+    Route::get('companies/{id}/show', 'CompanyController@show');
     Route::get('companies/{id}/employees', 'CompanyController@getEmployees');
     Route::get('companies/{id}/holidays', 'CompanyController@getHolidays');
     Route::get('companies/{companyId}/services/{serviceId}/timings', 'CompanyController@getTimings');
+    Route::get('companies/markers', 'CompanyController@getMarkers');
 
     /* company */
     Route::get('services', 'ServiceController@index');

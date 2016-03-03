@@ -39,8 +39,8 @@ $factory->define(\App\Src\Company\Company::class, function (Faker\Generator $fak
         'city_en' => $faker->city,
         'opens_at' => '8:00-am',
         'closes_at'=> '5:30-pm',
-        'latitude' =>$faker->latitude,
-        'longitude'=> $faker->longitude,
+        'latitude' =>$faker->randomElement(['29.333298','29.330863','29.327253','29.329760','29.311406']),
+        'longitude'=>$faker->randomElement(['47.909263','47.960333','47.993742','48.033611','48.063952']),
         'image' => $faker->imageUrl($width = 640, $height = 480)
     ];
 });

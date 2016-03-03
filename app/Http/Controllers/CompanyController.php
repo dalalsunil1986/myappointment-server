@@ -32,7 +32,7 @@ class CompanyController extends Controller
     public function index()
     {
         $userID = Auth::guard('api')->user() ? Auth::guard('api')->user()->id  :'0';
-        $companies = $this->companyRepository->with(['services','employees','favorites'])->get();
+        $companies = $this->companyRepository->get();
         $companies->map(function($company) use ($userID) {
             if($company->favorites->contains($userID)) {
                 $company->isFavorited = true;
@@ -80,4 +80,9 @@ class CompanyController extends Controller
 
     }
 
+    public function getMarkers()
+    {
+        $companies = $this->companyRepository->select(['id','name_en','city_en','latitude','longitude'])->get();
+        return response()->json(['data'=>$companies]);
+    }
 }

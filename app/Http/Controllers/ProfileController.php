@@ -87,7 +87,7 @@ class ProfileController extends Controller
         $user = Auth::guard('api')->user();
         if($user) {
             $appointment = $this->appointmentRepository->find($request->json('id'));
-//            $appointment->delete();
+            $appointment->delete();
             return response()->json(['success'=>true]);
         }
         return response()->json(['success'=>false,'message'=>'invalid operation']);
