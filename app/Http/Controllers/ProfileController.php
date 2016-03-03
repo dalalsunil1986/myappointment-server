@@ -81,7 +81,7 @@ class ProfileController extends Controller
         return response()->json(['success'=>false,'message'=>'invalid user']);
     }
 
-    public function cancelAppointment(Request $request,$id)
+    public function cancelAppointment(Request $request)
     {
         //create appointment
         $user = Auth::guard('api')->user();
