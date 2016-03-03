@@ -13,9 +13,9 @@
 
 //
 Route::get('test',function(\Illuminate\Http\Request $request){
-  $user =  App\Src\User\User::where('api_token',$request->get('api_token'))->first();
+//  $user =  App\Src\User\User::where('api_token',$request->get('api_token'))->first();
 //    dd($user->load('favorites')->toArray());
-    Auth::loginUsingId($user->id);
+    Auth::loginUsingId(1);
     dd(Auth::user());
 });
 Route::get('/', ['middleware' => 'auth',function () {

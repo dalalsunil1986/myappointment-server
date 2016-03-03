@@ -60,9 +60,9 @@ class ProfileController extends Controller
         $timingID = $request->json('timing_id');
         $companyID = $request->json('company_id');
         $serviceID = $request->json('service_id');
-        $employee_id = $request->json('employee_id');
+        $employee_id = $request->json('employee_id') ? : 0;
         $date = $request->json('date');
-//        $date = Carbon::createFromFormat('Y-m-d', $date)->toDateString();
+        $date = Carbon::createFromFormat('Y-m-d', $date)->toDateString();
         if($user) {
             try {
                 $user->appointments()->create([
