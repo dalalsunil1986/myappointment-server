@@ -55,6 +55,7 @@ class ProfileController extends Controller
 
     public function makeAppointment(Request $request)
     {
+        dd('zal');
         //create appointment
         $user = Auth::guard('api')->user();
         $timingID = $request->json('timing_id');
