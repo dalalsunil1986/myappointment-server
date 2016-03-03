@@ -15,13 +15,13 @@
 Route::get('test',function(\Illuminate\Http\Request $request){
 //  $user =  App\Src\User\User::where('api_token',$request->get('api_token'))->first();
 //    dd($user->load('favorites')->toArray());
-    Auth::loginUsingId(1);
-    dd(Auth::user());
+//    Auth::loginUsingId(1);
+//    dd(Auth::user());
 });
 Route::get('/', ['middleware' => 'auth',function () {
-    $company = App\Src\Company\Company::orderByRaw("RAND()")->first();
-    dd($company);
-    return view('welcome');
+//    $company = App\Src\Company\Company::orderByRaw("RAND()")->first();
+//    dd($company);
+//    return view('welcome');
 }]);
 
 //Route::group(['prefix' => 'api/v1', 'middleware' => 'auth:api'], function () {
@@ -56,7 +56,7 @@ Route::group(['prefix' => 'api/v1'], function () {
     Route::get('favorites','ProfileController@getFavorites');
     Route::get('appointments','ProfileController@getAppointments');
     Route::post('appointments/create','ProfileController@createAppointment');
-    Route::post('appointments/cancel/','ProfileController@cancelAppointment');
+    Route::post('appointments/cancel','ProfileController@cancelAppointment');
 
     //make favorite
     Route::get('companies/{id}/favorite','ProfileController@favoriteCompany');
