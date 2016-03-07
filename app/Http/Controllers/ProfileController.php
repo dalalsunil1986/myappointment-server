@@ -33,7 +33,7 @@ class ProfileController extends Controller
         $companies->map(function($company) use ($user) {
             $company->isFavorited = true;
         });
-        return response()->json(['data' => $companies]);
+        return response()->json(['data' => $user]);
     }
 
     public function getAppointments(Request $request)
@@ -41,12 +41,10 @@ class ProfileController extends Controller
         $user = Auth::guard('api')->user();
         if($user) {
             $appointments = $this->appointmentRepository->with([
-                'user','company','employee','timing'
-            ])->where('user_id',1)->get();
+                'user','company','employee','timing','service'
+            ])->where('user_id',$user->id)->get();
             foreach($appointments as $app) {
-                $app->load(['company.services'=>function($q) use ($app) {
-                    $q->where('services.id',$app->service_id)->first();
-                }]);
+                $app->load('pivot');
             }
         }
         return response()->json(['data' => $appointments]);

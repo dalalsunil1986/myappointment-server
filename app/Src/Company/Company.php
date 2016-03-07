@@ -15,6 +15,7 @@ class Company extends BaseModel
 
     protected $table = 'companies';
     protected $guarded = ['id'];
+    protected $hidden = ['pivot'];
     public $timestamps = false;
 
     public function users()
@@ -52,9 +53,4 @@ class Company extends BaseModel
         return $this->belongsToMany(User::class,'favorites');
     }
 
-    public function hasFavorited()
-    {
-        return true;
-//        return $this->favorites();
-    }
 }

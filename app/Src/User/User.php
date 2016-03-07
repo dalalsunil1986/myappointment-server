@@ -10,7 +10,7 @@ class User extends Authenticatable
 {
     protected $table = 'users';
     protected $guarded = ['id'];
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['password', 'remember_token','pivot'];
 
     public function appointments()
     {

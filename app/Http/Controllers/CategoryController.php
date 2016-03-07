@@ -23,7 +23,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = $this->categoryRepository->all();
+        $categories = $this->categoryRepository->get();
         return response()->json(['data'=>$categories]);
     }
 
@@ -35,7 +35,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $userID = Auth::guard('api')->user() ? Auth::guard('api')->user()->id  :'0';
-        $category = $this->categoryRepository->with(['companies.favorites'])->find($id);
+        $category = $this->categoryRepository->with(['companies.favorites','companies.services'])->find($id);
         $category->companies->map(function($company) use ($userID) {
             if ($company->favorites->contains($userID)) {
                 $company->isFavorited = true;

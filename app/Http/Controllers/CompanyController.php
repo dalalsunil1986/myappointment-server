@@ -60,21 +60,6 @@ class CompanyController extends Controller
 
     }
 
-    /**
-     * @param Request $request
-     */
-    public function getTimings(Request $request,$companyID,$serviceID)
-    {
-        $date = $request->date;
-        $company = $this->companyRepository->find($companyID);
-        $service = $this->serviceRepository->find($serviceID);
-
-        // get all the timings for the company ?
-
-        return response()->json(['data'=>$company->services]);
-
-    }
-
     public function getHolidays()
     {
 

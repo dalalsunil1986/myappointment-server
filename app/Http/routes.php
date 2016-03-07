@@ -2,9 +2,9 @@
 
 Route::get('test',function(\Illuminate\Http\Request $request){
 //  $user =  App\Src\User\User::where('api_token',$request->get('api_token'))->first();
-//    dd($user->load('favorites')->toArray());
-//    Auth::loginUsingId(1);
-//    dd(Auth::user());
+//    dd($user->toArray());
+    Auth::loginUsingId(1);
+    dd(Auth::user());
 });
 Route::get('/', ['middleware' => 'auth',function () {
 //    $company = App\Src\Company\Company::orderByRaw("RAND()")->first();

@@ -28,19 +28,19 @@ class TimingController extends Controller
         return response()->json(['data' => $timings]);
     }
 
-    public function getAvailableTimings(Request $request, Timing $timing, CompanyService $companyService)
-    {
-        $companyID = $request->get('company');
-        $serviceID = $request->get('service');
-
-        $companyServices = $companyService->where('company_id', $companyID)->where('service_id', $serviceID)->get();
-
-        $companyServiceIDs = $companyServices->lists('id')->toArray();
-
-        $timings = $timing->where('company_service_id', $companyServiceIDs)->get();
-
-        return response()->json(['data' => $timings]);
-
-    }
+//    public function getAvailableTimings(Request $request, Timing $timing, CompanyService $companyService)
+//    {
+//        $companyID = $request->get('company');
+//        $serviceID = $request->get('service');
+//
+//        $companyServices = $companyService->where('company_id', $companyID)->where('service_id', $serviceID)->get();
+//
+//        $companyServiceIDs = $companyServices->lists('id')->toArray();
+//
+//        $timings = $timing->where('company_service_id', $companyServiceIDs)->get();
+//
+//        return response()->json(['data' => $timings]);
+//
+//    }
 
 }
