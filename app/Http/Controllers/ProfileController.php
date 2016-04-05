@@ -29,10 +29,10 @@ class ProfileController extends Controller
     public function getFavorites(Request $request)
     {
         $user = Auth::guard('api')->user()->load('favorites');
-        $companies =  $user->favorites;
-        $companies->map(function($company) use ($user) {
+        $user->favorites->map(function($company) use ($user) {
             $company->isFavorited = true;
         });
+        $user->latest()->paginate(100);
         return response()->json(['data' => $user]);
     }
 
@@ -85,34 +85,30 @@ class ProfileController extends Controller
         $user = Auth::guard('api')->user();
         if($user) {
             $appointment = $this->appointmentRepository->find($request->json('id'));
-//            $appointment->delete();
-            return response()->json(['success'=>true]);
+            if($appointment) {
+//                $appointment->delete();
+                return response()->json(['success'=>true]);
+            }
+            return response()->json(['success'=>false,'message'=>'invalid appointment']);
         }
         return response()->json(['success'=>false,'message'=>'invalid operation']);
     }
 
 
-    public function favoriteCompany(Request $request,Company $companyRepository, $companyID)
+    public function favoriteCompany(Request $request,Company $companyRepository)
     {
-        $company = $companyRepository->find($companyID);
+        $company = $companyRepository->find($request->json('company'));
         $user = Auth::guard('api')->user();
-        if($user) {
-            if(!$user->favorites->contains($company->id)) {
+        if($user && $company) {
+            if($user->favorites->contains($company->id)) {
+                $user->favorites()->detach($company->id);
+                return response()->json(['success'=>true,'message'=>'unfavorited']);
+            } else {
                 $user->favorites()->attach($company->id);
+                return response()->json(['success'=>true,'message'=>'favorited']);
             }
         }
-        return response()->json(['success'=>true]);
-    }
-
-    public function unFavoriteCompany(Request $request,Company $companyRepository, $companyID)
-    {
-        $company = $companyRepository->find($companyID);
-        $user = Auth::guard('api')->user();
-        if($user) {
-            $user->favorites()->detach($company->id);
-            return response()->json(['success'=>true]);
-        }
-        return response()->json(['success'=>false,'message'=>'invalid operation']);
+        return response()->json(['success'=>false]);
     }
 
 }

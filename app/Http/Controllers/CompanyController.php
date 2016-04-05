@@ -46,12 +46,8 @@ class CompanyController extends Controller
     public function show($id)
     {
         $userID = Auth::guard('api')->user() ? Auth::guard('api')->user()->id  :'0';
-        $company = $this->companyRepository->with(['services','employees'])->find($id);
-        if($company->favorites->contains($userID)) {
-            $company->isFavorited = true;
-        } else {
-            $company->isFavorited = false;
-        }
+        $company = $this->companyRepository->with(['favorites','services','employees'])->find($id);
+        $company->isFavorited = $company->favorites->contains($userID);
         return response()->json(['data'=>$company]);
     }
 
