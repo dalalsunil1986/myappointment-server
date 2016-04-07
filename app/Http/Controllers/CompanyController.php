@@ -32,13 +32,9 @@ class CompanyController extends Controller
     public function index()
     {
         $userID = Auth::guard('api')->user() ? Auth::guard('api')->user()->id  :'0';
-        $companies = $this->companyRepository->get();
+        $companies = $this->companyRepository->with(['favorites'])->get();
         $companies->map(function($company) use ($userID) {
-            if($company->favorites->contains($userID)) {
-                $company->isFavorited = true;
-            } else {
-                $company->isFavorited = false;
-            }
+            $company->isFavorited = $company->favorites->contains($userID);
         });
         return response()->json(['data'=>$companies]);
     }
