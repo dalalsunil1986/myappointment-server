@@ -34,6 +34,8 @@ Route::group(['prefix' => 'api/v1'], function () {
 
     Route::resource('users','UserController');
 
+    Route::resource('services','ServiceController');
+
     Route::get('timings', 'TimingController@index');
 
     /* auth::api routes */

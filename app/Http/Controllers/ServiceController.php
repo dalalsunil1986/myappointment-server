@@ -7,7 +7,7 @@ use App\Src\Service\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CompanyController extends Controller
+class ServiceController extends Controller
 {
     /**
      * @var Company
@@ -32,21 +32,23 @@ class CompanyController extends Controller
     public function index(Request $request)
     {
         $userID = Auth::guard('api')->user() ? Auth::guard('api')->user()->id  :'0';
-        $searchString = trim($request->get('search') ? $request->get('search') : '' );
-        $companies = $this->companyRepository->with(['favorites']);
-        $companies = $companies->where('name_en', 'LIKE', "%$searchString%")->orWhere('city_en','LIKE',"%$searchString%")->get();
-        $companies->map(function($company) use ($userID) {
-            $company->isFavorited = $company->favorites->contains($userID);
+        $services = $this->serviceRepository->with(['companies.favorites'])->get();
+        $services->map(function($service) use ($userID) {
+            $service->companies->map(function($company) use ($userID) {
+                $company->isFavorited = $company->favorites->contains($userID);
+            });
         });
-        return response()->json(['data'=>$companies]);
+        return response()->json(['data'=>$services]);
     }
 
     public function show($id)
     {
         $userID = Auth::guard('api')->user() ? Auth::guard('api')->user()->id  :'0';
-        $company = $this->companyRepository->with(['favorites','services','employees'])->find($id);
-        $company->isFavorited = $company->favorites->contains($userID);
-        return response()->json(['data'=>$company]);
+        $service = $this->serviceRepository->with(['companies.favorites'])->find($id);
+        $service->companies->map(function($company) use ($userID) {
+            $company->isFavorited = $company->favorites->contains($userID);
+        });
+        return response()->json(['data'=>$service]);
     }
 
     public function getEmployees()
