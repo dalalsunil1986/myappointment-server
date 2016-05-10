@@ -27,7 +27,7 @@ $factory->define(\App\Src\Category\Category::class, function (Faker\Generator $f
     return [
         'name_en' => $faker->randomElement(['spa','salon','clinic']),
 //        'description_en' => $faker->sentence(10),
-        'image' => $faker->imageUrl($width = 640, $height = 480)
+        'image' => $faker->imageUrl($width = 500, $height = 960,array_rand(['city'=>'city','cats'=>'cats','nature'=>'nature']))
     ];
 });
 
@@ -41,7 +41,7 @@ $factory->define(\App\Src\Company\Company::class, function (Faker\Generator $fak
         'closes_at'=> '5:30-pm',
         'latitude' =>$faker->randomElement(['29.333298','29.330863','29.327253','29.329760','29.311406']),
         'longitude'=>$faker->randomElement(['47.909263','47.960333','47.993742','48.033611','48.063952']),
-        'image' => $faker->imageUrl($width = 640, $height = 480)
+        'image' => $faker->imageUrl($width = 500, $height = 960,array_rand(['city'=>'city','cats'=>'cats','nature'=>'nature']))
     ];
 });
 
@@ -50,7 +50,7 @@ $factory->define(\App\Src\Service\Service::class, function (Faker\Generator $fak
         'name_en' => $faker->word,
         'parent_id' => 0,
         'description_en' => $faker->sentence(10),
-        'image' => $faker->imageUrl($width = 640, $height = 480)
+        'image' => $faker->imageUrl($width = 500, $height = 960,array_rand(['city'=>'city','cats'=>'cats','nature'=>'nature']))
     ];
 });
 
@@ -58,7 +58,7 @@ $factory->define(\App\Src\Employee\Employee::class, function (Faker\Generator $f
     return [
         'company_id' => 1,
         'name_en' => $faker->firstName,
-        'image' => $faker->imageUrl($width = 640, $height = 480),
+        'image' => $faker->imageUrl($width = 500, $height = 960,array_rand(['city'=>'city','cats'=>'cats','nature'=>'nature'])),
         'holidays'=>$faker->randomElement(['sunday','monday','tuesday','wednesday','thursday','friday','saturday'])
     ];
 });

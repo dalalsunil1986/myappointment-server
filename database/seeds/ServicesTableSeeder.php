@@ -17,7 +17,7 @@ class ServicesTableSeeder extends Seeder
 
         $companies =  App\Src\Company\Company::lists('id')->toArray();
 
-        factory(App\Src\Service\Service::class, 50)->create()->each(function($service) use ($companies,$faker) {
+        factory(App\Src\Service\Service::class, 20)->create()->each(function($service) use ($companies,$faker) {
             $service->companies()->sync([$companies[array_rand($companies)]=>['price'=>$faker->randomFloat(3,2)]]);
         });
     }
