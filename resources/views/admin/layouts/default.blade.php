@@ -49,6 +49,26 @@
     <script src="/adminpanel/js/custom.js"></script>
     <script src="/adminpanel/js/jquery.nicescroll.js"></script>
     <script src="/adminpanel/js/scripts.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dataTables').DataTable({
+                responsive: true
+            });
+        });
+
+        $("[data-toggle=tooltip]").tooltip();
+
+        $(document).on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            if ( $( "#deleteModal" ).length ) {
+                var link = button.data('link') // Extract info from data-* attributes
+                $("#deleteModal").attr("action", link);
+            }
+        });
+
+    </script>
+
 @show
 </body>
 </html>
