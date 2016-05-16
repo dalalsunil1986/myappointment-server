@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['namespace' => 'Api','prefix' => 'api/v1'], function () {
+Route::group(['middleware' => 'api', 'namespace' => 'Api','prefix' => 'api/v1'], function () {
 
     /* Auth Routes */
     Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -39,8 +39,8 @@ Route::group(['namespace' => 'Api','prefix' => 'api/v1'], function () {
 /*********************************************************************************************************
  * Admin Routes
  ********************************************************************************************************/
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['admin']], function () {
-    Route::get('/', 'BlogController@index');
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['web','admin']], function () {
+    Route::get('/', 'CategoryController@index');
 });
 
 Route::group(['middleware' => 'web'], function () {
