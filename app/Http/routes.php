@@ -1,19 +1,6 @@
 <?php
 
-Route::get('test',function(\Illuminate\Http\Request $request){
-//  $user =  App\Src\User\User::where('api_token',$request->get('api_token'))->first();
-//    dd($user->toArray());
-    Auth::loginUsingId(1);
-    dd(Auth::user());
-});
-Route::get('/', ['middleware' => 'auth',function () {
-//    $company = App\Src\Company\Company::orderByRaw("RAND()")->first();
-//    dd($company);
-//    return view('welcome');
-}]);
-
-//Route::group(['prefix' => 'api/v1', 'middleware' => 'auth:api'], function () {
-Route::group(['prefix' => 'api/v1'], function () {
+Route::group(['namespace' => 'Api','prefix' => 'api/v1'], function () {
 
     /* Auth Routes */
     Route::post('auth/login', 'Auth\AuthController@postLogin');
@@ -47,4 +34,17 @@ Route::group(['prefix' => 'api/v1'], function () {
 
     //make favorite
     Route::post('companies/favorite','ProfileController@favoriteCompany');
+});
+
+/*********************************************************************************************************
+ * Admin Routes
+ ********************************************************************************************************/
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['admin']], function () {
+    Route::get('/', 'BlogController@index');
+});
+
+Route::group(['middleware' => 'web'], function () {
+    Route::auth();
+    Route::get('/', 'HomeController@index');
+    Route::get('/home', 'HomeController@index');
 });

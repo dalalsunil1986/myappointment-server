@@ -19,6 +19,10 @@ class CreateCompanyServicesTable extends Migration
             $table->decimal('price',5,2);
             $table->string('duration_en')->nullable(); // ex: 1 hour, 2 hour, 30min etc
             $table->text('description_en')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('twitter')->nullable();
+            $table->string('snapchat')->nullable();
+            $table->string('instagram')->nullable();
         });
     }
 
