@@ -17,11 +17,11 @@ html, body{
 }
 @font-face{
 	font-family:'Montserrat-Regular';
-	src:url(../../../fonts/Montserrat-Regular.ttf) format('truetype');
+	src:url(../fonts/Montserrat-Regular.ttf) format('truetype');
 }
 @font-face{
 	font-family: 'Muli-Regular';
-	src:url(../../../fonts/Muli-Regular.ttf) format('truetype');
+	src:url(../fonts/Muli-Regular.ttf) format('truetype');
 }
 body a{
 	transition:0.5s all;
@@ -387,7 +387,7 @@ nav.navbar.navbar-static-top {
 	font-size: 0.9em;	
 }
 .navbar-left-right input[type="submit"]{
-	background: url(../../images/search.png) 0px 2px no-repeat;
+	background: url(../images/search.png) 0px 2px no-repeat;
 	width:16px;
 	height:16px;
 	border: none;
@@ -1005,7 +1005,7 @@ i.fa.fa-twitter {
 	width:0;
 	height:0;
 	content:"";
-	background:url(../../images/link.png) 50% 50% no-repeat;
+	background:url(../images/link.png) 50% 50% no-repeat;
 	border-radius:0;
 	z-index:0;
 	-webkit-transition:0.45s;
@@ -1021,7 +1021,7 @@ i.fa.fa-twitter {
 	margin:0;
 	height:0%;
 	width:200%;
-	background:url(../../images/dark.png);
+	background:url(../images/dark.png);
 	content:"";
 	border-radius:0;
 	overflow:hidden;
