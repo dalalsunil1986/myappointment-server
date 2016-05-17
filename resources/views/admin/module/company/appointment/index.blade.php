@@ -9,21 +9,19 @@
             <i class="fa fa-angle-right"></i>
             <a href="{{action('Admin\CompanyController@show',$company->id)}}">{{ $company->name }}</a>
             <i class="fa fa-angle-right"></i>
-            <span>Services</span>
+            <span>Employees</span>
         </h2>
     </div>
 @endsection
 
 @section('left')
-    @include('admin.module.company.service.add',['company'=>$company,'services'=>$services])
-    <hr>
-    @include('admin.module.company.sidebar',['active'=>'services','record'=>$company])
+    @include('admin.module.company.sidebar',['active'=>'appointments','record'=>$company])
 @endsection
 
 @section('right')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h1>{{ $company->name }} Services</h1>
+            <h1>{{ $company->name }} Employees</h1>
         </div>
     </div>
     <div class="panel-body" style="padding: 0;">
@@ -35,14 +33,14 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($company->services as $service)
+            @foreach($company->employees as $employee)
                 <tr class="gradeU">
                     <td >
-                        <span class="title">{{ $service->name }}</span>
+                        <span class="title">{{ $employee->name }}</span>
                     </td>
                     <td class="f18">
                         <a href="#" class="red" data-toggle="modal" data-target="#deleteModalBox"
-                           data-link="{{action('Admin\CompanyServiceController@destroy',[$company->id,$service->id])}}">
+                           data-link="{{action('Admin\CompanyEmployeeController@destroy',[$company->id,$employee->id])}}">
                             <i class="fa fa-close "></i>
                         </a>
                     </td>

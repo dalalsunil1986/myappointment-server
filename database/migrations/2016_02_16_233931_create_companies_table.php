@@ -26,6 +26,7 @@ class CreateCompaniesTable extends Migration
             $table->string('latitudeDelta')->nullable();
             $table->string('longitudeDelta')->nullable();
             $table->string('image')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -40,10 +40,11 @@ Route::group(['middleware' => 'api', 'namespace' => 'Api','prefix' => 'api/v1'],
  * Admin Routes
  ********************************************************************************************************/
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['web','admin']], function () {
-    Route::get('/', 'HomeController@dashboard');
-    Route::resource('companies', 'CompanyController');
-    Route::post('companies/{company}/services', 'CompanyServiceController@updateService');
+    Route::resource('companies.employees', 'CompanyEmployeeController');
     Route::resource('companies.services', 'CompanyServiceController');
+    Route::resource('companies.appointments', 'CompanyAppointmentController');
+    Route::resource('companies', 'CompanyController');
+    Route::get('/', 'HomeController@dashboard');
 });
 
 Route::group(['middleware' => 'web'], function () {

@@ -16,7 +16,6 @@ class Company extends BaseModel
     protected $table = 'companies';
     protected $guarded = ['id'];
     protected $hidden = ['pivot'];
-    public $timestamps = false;
 
     public function users()
     {
@@ -30,7 +29,7 @@ class Company extends BaseModel
 
     public function services()
     {
-        return $this->belongsToMany(Service::class,'company_services')->withPivot(['price','duration_en','description_en']);
+        return $this->belongsToMany(Service::class,'company_services')->withPivot(['price','duration_en','description_en'])->withTimestamps()->latest();
     }
 
     public function employees()

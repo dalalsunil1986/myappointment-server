@@ -3,39 +3,32 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Src\Company\CompanyRepository;
-use App\Src\Service\ServiceRepository;
-use App\Src\Timing\TimingRepository;
+use App\Src\Employee\Employee;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class CompanyServiceController extends Controller
+class CompanyAppointmentController extends Controller
 {
     /**
      * @var Company
      */
     private $companyRepository;
     /**
-     * @var TimingRepository
+     * @var Employee
      */
-    private $timingRepository;
-    /**
-     * @var ServiceRepository
-     */
-    private $serviceRepository;
+    private $employeeRepository;
 
     /**
      * CompanyController constructor.
      * @param CompanyRepository $repository
-     * @param ServiceRepository $serviceRepository
-     * @param TimingRepository $timingRepository
+     * @param Employee $employeeRepository
      */
-    public function __construct(CompanyRepository $repository, ServiceRepository $serviceRepository, TimingRepository $timingRepository)
+    public function __construct(CompanyRepository $repository, Employee $employeeRepository)
     {
         $this->companyRepository = $repository;
-        $this->timingRepository = $timingRepository;
-        $this->serviceRepository = $serviceRepository;
+        $this->employeeRepository = $employeeRepository;
     }
     /**
      * Display a listing of the resource.
@@ -47,8 +40,8 @@ class CompanyServiceController extends Controller
         $company = $this->companyRepository->model->with(['services'=>function($q) {
             $q->latest();
         }])->find($companyID);
-        $services = $this->serviceRepository->model->whereNotIn('id', $company->services->modelKeys())->get();
-        return view('admin.module.company.service.index',compact('company','services'));
+        $employees = $this->employeeRepository->whereNotIn('id', $company->employees->modelKeys())->get();
+        return view('admin.module.company.appointment.index',compact('company','employees'));
     }
 
     /**
@@ -96,19 +89,14 @@ class CompanyServiceController extends Controller
      */
     public function store(Request $request, $id)
     {
+        $this->validate($request,[
+            'name_en' => 'required|string|unique:employees,name_en,null,'.$id.',company_id,'.$id
+        ]);
+
         $company = $this->companyRepository->model->find($id);
-
         // strip duplicates
-        $companyServices = $company->services->modelKeys();
-
         // @todo : use sync
-        if ($request->services) {
-            $newServices = collect($request->services)->filter(function ($item) use ($companyServices) {
-                return !in_array($item,$companyServices);
-            })->toArray();
-            $company->services()->attach($newServices);
-        }
-
+        $company->employees()->create($request->all());
         return redirect()->back()->with('success','Saved');
     }
 

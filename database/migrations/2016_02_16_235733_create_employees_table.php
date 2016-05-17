@@ -18,6 +18,7 @@ class CreateEmployeesTable extends Migration
             $table->string('name_en');
             $table->string('holidays'); // ex:(sunday,monday) i.e (comma seperated values)
             $table->string('image')->nullable();
+            $table->timestamps();
         });
     }
 

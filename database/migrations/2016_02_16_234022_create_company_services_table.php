@@ -23,6 +23,7 @@ class CreateCompanyServicesTable extends Migration
             $table->string('twitter')->nullable();
             $table->string('snapchat')->nullable();
             $table->string('instagram')->nullable();
+            $table->timestamps();
         });
     }
 

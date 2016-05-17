@@ -11,7 +11,6 @@ class Service extends BaseModel
 
     protected $table = 'services';
     protected $guarded = ['id'];
-    public $timestamps = false;
 
     public function companies()
     {

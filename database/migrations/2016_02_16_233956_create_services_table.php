@@ -18,6 +18,7 @@ class CreateServicesTable extends Migration
             $table->string('name_en');
             $table->text('description_en')->nullable();
             $table->string('image')->nullable(); // full thumbnail image path ex:http://site.com/image.jpg
+            $table->timestamps();
         });
     }
 
