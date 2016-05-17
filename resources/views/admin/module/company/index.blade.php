@@ -16,7 +16,7 @@
             <h1>Companies</h1>
         </div>
     </div>
-    <div class="panel-body">
+    <div class="panel-body" style="padding: 0;">
         <table class="table table-striped table-bordered table-hover" >
             <thead class="bg-blue">
             <tr>

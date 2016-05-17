@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Src\Company\Company;
+use App\Src\Company\CompanyRepository;
+use App\Src\Timing\TimingRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -14,14 +15,20 @@ class CompanyController extends Controller
      * @var Company
      */
     private $companyRepository;
+    /**
+     * @var TimingRepository
+     */
+    private $timingRepository;
 
     /**
      * CompanyController constructor.
-     * @param Company $repository
+     * @param CompanyRepository $repository
+     * @param TimingRepository $timingRepository
      */
-    public function __construct(Company $repository)
+    public function __construct(CompanyRepository $repository, TimingRepository $timingRepository)
     {
         $this->companyRepository = $repository;
+        $this->timingRepository = $timingRepository;
     }
     /**
      * Display a listing of the resource.
@@ -30,7 +37,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = $this->companyRepository->paginate(100);
+        $companies = $this->companyRepository->model->paginate(100);
         return view('admin.module.company.index',compact('companies'));
     }
 
@@ -62,7 +69,7 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        $company = $this->companyRepository->find($id);
+        $company = $this->companyRepository->model->find($id);
         return view('admin.module.company.view',compact('company'));
     }
 
@@ -74,8 +81,11 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        $company = $this->companyRepository->find($id);
-        return view('admin.module.company.edit',compact('company'));
+        $companyRepo = $this->companyRepository;
+        $company = $companyRepo->model->find($id);
+        $timings = $this->timingRepository->timings;
+        $cities = $companyRepo->cities;
+        return view('admin.module.company.edit',compact('company','timings','cities'));
     }
 
     /**
@@ -88,10 +98,9 @@ class CompanyController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $company = $this->companyRepository->find($id);
+        $company = $this->companyRepository->model->find($id);
         $this->validate($request, [
             'name_en'       => 'required',
-//            'description_en' => 'required',
 //            'cover'          => 'image'
         ]);
 
@@ -101,7 +110,7 @@ class CompanyController extends Controller
 //            $file = $request->file('cover');
 //            $photoRepository->replace($file, $blog, ['thumbnail' => 1], $id);
 //        }
-        return redirect()->back()->with('success','Saved');
+        return redirect()->action('Admin\CompanyController@show',$id)->with('success','Saved');
     }
 
     /**

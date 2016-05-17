@@ -1,5 +1,5 @@
 @extends('admin.layouts.one-col')
 
 @section('middle')
-    <h1>hi</h1>
+    <h1>Admin Dashboard</h1>
 @endsection

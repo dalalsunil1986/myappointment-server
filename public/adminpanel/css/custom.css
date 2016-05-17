@@ -140,3 +140,16 @@
     border-top: 0;
     font-size: 17px;
 }
+
+.title {
+    color:black;
+    font-size: 18px;
+}
+
+.red {
+    color:red;
+    font-size: 18px;
+}
+.blue {
+    color:blue;
+}

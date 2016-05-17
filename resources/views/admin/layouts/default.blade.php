@@ -9,6 +9,7 @@
     @section('css')
         <link href="/adminpanel/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
         <link href="/adminpanel/css/font-awesome.css" rel="stylesheet">
+        <link href="/node_modules/select2/dist/css/select2.min.css" rel="stylesheet">
         <link href="/adminpanel/css/style.css" rel='stylesheet' type='text/css' />
         <link href="/adminpanel/css/custom.css" rel="stylesheet">
     @show
@@ -53,11 +54,12 @@
     <script src="/adminpanel/js/custom.js"></script>
     <script src="/adminpanel/js/jquery.nicescroll.js"></script>
     <script src="/adminpanel/js/scripts.js"></script>
-
+    <script src="/node_modules/select2/dist/js/select2.min.js"></script>
     <script>
-
-        $("[data-toggle=tooltip]").tooltip();
-
+        $(document).ready(function () {
+            $(".select2").select2();
+            $("[data-toggle=tooltip]").tooltip();
+        });
         $(document).on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
             if ( $( "#deleteModal" ).length ) {
