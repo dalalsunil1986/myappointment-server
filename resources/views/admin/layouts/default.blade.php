@@ -28,6 +28,8 @@
             @show
             <div class="content-top" >
 
+                @include('admin.partials.notifications')
+
                 @section('content')
 
                 @show

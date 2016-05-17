@@ -74,7 +74,8 @@ class CompanyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $company = $this->companyRepository->find($id);
+        return view('admin.module.company.edit',compact('company'));
     }
 
     /**
@@ -87,6 +88,20 @@ class CompanyController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $company = $this->companyRepository->find($id);
+        $this->validate($request, [
+            'name_en'       => 'required',
+//            'description_en' => 'required',
+//            'cover'          => 'image'
+        ]);
+
+        $company->update(array_merge($request->all()));
+//
+//        if ($request->hasFile('cover')) {
+//            $file = $request->file('cover');
+//            $photoRepository->replace($file, $blog, ['thumbnail' => 1], $id);
+//        }
+        return redirect()->back()->with('success','Saved');
     }
 
     /**
