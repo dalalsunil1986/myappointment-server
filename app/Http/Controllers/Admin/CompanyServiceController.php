@@ -45,7 +45,7 @@ class CompanyServiceController extends Controller
     public function index($companyID)
     {
         $company = $this->companyRepository->model->with(['services'])->find($companyID);
-        $services = $this->serviceRepository->model->whereNotIn('id',$company->services->modelKeys())->get();
+        $services = $this->serviceRepository->model->whereNotIn('id', $company->services->modelKeys())->get();
         return view('admin.module.company.service.index',compact('company','services'));
     }
 
@@ -107,8 +107,14 @@ class CompanyServiceController extends Controller
     {
         $company = $this->companyRepository->model->find($id);
 
+        // strip duplicates
+        $companyServices = $company->services->modelKeys();
+
         if ($request->services) {
-            $company->services()->attach($request->services);
+            $newServices = collect($request->services)->filter(function ($item) use ($companyServices) {
+                return !in_array($item,$companyServices);
+            });
+            $company->services()->attach($newServices->toArray());
         }
 
         return redirect()->back()->with('success','Saved');
