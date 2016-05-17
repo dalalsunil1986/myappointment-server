@@ -4,7 +4,7 @@
 #page-wrapper {
     /*--padding: 0 15px;--*/
     min-height: 568px;
-    
+
 }
 
 @media(min-width:768px) {
@@ -28,7 +28,7 @@
 
 .navbar-top-links li a {
     padding: 15px;
-  
+
 }
 
 .navbar-top-links .dropdown-menu li {
@@ -105,7 +105,7 @@
         z-index: 1;
         position: absolute;
         width: 250px;
-        
+
     }
 
     .navbar-top-links .dropdown-messages,
@@ -118,4 +118,25 @@
 .main {
     margin:10px 0;
     min-height:400px;
+}
+
+.list-group-alternate .active {
+    background-color: aliceblue;
+    border:1px solid #DDDDDD;
+    color:#000000;
+}
+
+.table-user-information > tbody > tr {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+.table-user-information > tbody > tr > th {
+    color:#000000;
+    font-size: 19px;
+}
+.table-user-information > tbody > tr:first-child {
+    border-top: 0;
+}
+.table-user-information > tbody > tr > td {
+    border-top: 0;
+    font-size: 17px;
 }

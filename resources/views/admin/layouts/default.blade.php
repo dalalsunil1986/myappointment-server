@@ -19,11 +19,13 @@
 <div id="wrapper">
     <!----->
     @include('admin.partials.left-sidebar')
+
     <div id="page-wrapper" class="gray-bg dashbard-1">
 
         <div class="content-main">
-            @include('admin.partials.breadcrumb')
-
+            @section('breadcrumb')
+                @include('admin.partials.breadcrumb')
+            @show
             <div class="content-top" >
 
                 @section('content')
@@ -51,11 +53,6 @@
     <script src="/adminpanel/js/scripts.js"></script>
 
     <script>
-        $(document).ready(function() {
-            $('#dataTables').DataTable({
-                responsive: true
-            });
-        });
 
         $("[data-toggle=tooltip]").tooltip();
 

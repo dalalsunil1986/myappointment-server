@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div class="inner-xs text-center">
-                     {{ isset($info) ? $info : 'Are you sure ?' }} ?
+                    {{ isset($info) ? $info : 'Are you sure ?' }} ?
                 </div>
             </div>
             <div class="modal-footer">

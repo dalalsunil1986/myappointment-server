@@ -13,15 +13,15 @@ class CompanyController extends Controller
     /**
      * @var Company
      */
-    private $repository;
+    private $companyRepository;
 
     /**
      * CompanyController constructor.
-     * @param Company $model
+     * @param Company $repository
      */
     public function __construct(Company $repository)
     {
-        $this->repository = $repository;
+        $this->companyRepository = $repository;
     }
     /**
      * Display a listing of the resource.
@@ -30,7 +30,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = $this->repository->paginate(100);
+        $companies = $this->companyRepository->paginate(100);
         return view('admin.module.company.index',compact('companies'));
     }
 
@@ -41,7 +41,6 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -63,7 +62,8 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        //
+        $company = $this->companyRepository->find($id);
+        return view('admin.module.company.view',compact('company'));
     }
 
     /**

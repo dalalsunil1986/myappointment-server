@@ -1,5 +1,15 @@
 @extends('admin.layouts.one-col')
 
+@section('breadcrumb')
+    <div class="banner">
+        <h2>
+            <a href="/admin">Home</a>
+            <i class="fa fa-angle-right"></i>
+            <span>Companies</span>
+        </h2>
+    </div>
+@endsection
+
 @section('middle')
     <div class="panel panel-default">
         <div class="panel-heading">
