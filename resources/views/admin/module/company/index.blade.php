@@ -20,7 +20,6 @@
         <table class="table table-striped table-bordered table-hover" >
             <thead class="bg-blue">
             <tr>
-                <th>SINO</th>
                 <th>Name</th>
                 <th></th>
                 <th></th>
@@ -30,9 +29,6 @@
             <tbody>
             @foreach($companies as $company)
                 <tr class="gradeU">
-                    <td>
-                        {{ $company->id }}
-                    </td>
                     <td>
                         <a href="{{ action('Admin\CompanyController@show',$company->id)}}">{{ $company->name }} </a>
                     </td>

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Src\Appointment\Appointment;
 use App\Src\Company\CompanyRepository;
-use App\Src\Employee\Employee;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -16,32 +17,46 @@ class CompanyAppointmentController extends Controller
      */
     private $companyRepository;
     /**
-     * @var Employee
+     * @var Appointment
      */
-    private $employeeRepository;
+    private $appointmentRepository;
 
     /**
      * CompanyController constructor.
      * @param CompanyRepository $repository
-     * @param Employee $employeeRepository
+     * @param Appointment $appointmentRepository
      */
-    public function __construct(CompanyRepository $repository, Employee $employeeRepository)
+    public function __construct(CompanyRepository $repository, Appointment $appointmentRepository)
     {
         $this->companyRepository = $repository;
-        $this->employeeRepository = $employeeRepository;
+        $this->appointmentRepository = $appointmentRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
+     * @param $companyID
      * @return \Illuminate\Http\Response
      */
-    public function index($companyID)
+    public function index(Request $request,$companyID)
     {
-        $company = $this->companyRepository->model->with(['services'=>function($q) {
-            $q->latest();
-        }])->find($companyID);
-        $employees = $this->employeeRepository->whereNotIn('id', $company->employees->modelKeys())->get();
-        return view('admin.module.company.appointment.index',compact('company','employees'));
+//        dd(Carbon::now()->toDateTimeString());
+        $appointments = $this->appointmentRepository->with([
+            'user','service',
+            'timing','employee',
+        ])->where('company_id',$companyID);
+
+        if($request->type == 'past') {
+            $appointments->where('date','<',Carbon::now()->toDateTimeString());
+        } elseif($request->type == 'all') {
+            // dont run query, (will output all the records)
+        } else {
+            $appointments->where('date','>',Carbon::now()->toDateTimeString());
+        }
+
+        $appointments = $appointments->orderBy('date','desc')->get();
+        $company = $this->companyRepository->model->find($companyID);
+        return view('admin.module.company.appointment.index',compact('appointments','company'));
     }
 
     /**
