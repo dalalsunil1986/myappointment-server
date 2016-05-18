@@ -44,17 +44,15 @@ class CompanyAppointmentController extends Controller
         $appointments = $this->appointmentRepository->with([
             'user','service',
             'timing','employee',
-        ])->where('company_id',$companyID);
-
+        ])->where('company_id',$companyID)->orderBy('date','desc');
         if($request->type == 'past') {
             $appointments->where('date','<',Carbon::now()->toDateTimeString());
         } elseif($request->type == 'all') {
             // dont run query, (will output all the records)
         } else {
-            $appointments->where('date','>',Carbon::now()->toDateTimeString());
+            $appointments->where('date','>',Carbon::now()->toDateTimeString())->orderBy('date','asc');
         }
-
-        $appointments = $appointments->orderBy('date','desc')->get();
+        $appointments = $appointments->get();
         $company = $this->companyRepository->model->find($companyID);
         return view('admin.module.company.appointment.index',compact('appointments','company'));
     }

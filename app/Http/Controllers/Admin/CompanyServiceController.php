@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Src\Company\CompanyRepository;
+use App\Src\Company\CompanyService;
 use App\Src\Service\ServiceRepository;
 use App\Src\Timing\TimingRepository;
 use Illuminate\Http\Request;
@@ -24,6 +25,10 @@ class CompanyServiceController extends Controller
      * @var ServiceRepository
      */
     private $serviceRepository;
+    /**
+     * @var CompanyService
+     */
+    private $companyService;
 
     /**
      * CompanyController constructor.
@@ -31,11 +36,12 @@ class CompanyServiceController extends Controller
      * @param ServiceRepository $serviceRepository
      * @param TimingRepository $timingRepository
      */
-    public function __construct(CompanyRepository $repository, ServiceRepository $serviceRepository, TimingRepository $timingRepository)
+    public function __construct(CompanyRepository $repository, ServiceRepository $serviceRepository, TimingRepository $timingRepository, CompanyService $companyService)
     {
         $this->companyRepository = $repository;
         $this->timingRepository = $timingRepository;
         $this->serviceRepository = $serviceRepository;
+        $this->companyService = $companyService;
     }
     /**
      * Display a listing of the resource.
@@ -48,7 +54,8 @@ class CompanyServiceController extends Controller
             $q->latest();
         }])->find($companyID);
         $services = $this->serviceRepository->model->whereNotIn('id', $company->services->modelKeys())->get();
-        return view('admin.module.company.service.index',compact('company','services'));
+        $durations = $this->serviceRepository->durations_en;
+        return view('admin.module.company.service.index',compact('company','services','durations'));
     }
 
     /**
@@ -63,13 +70,19 @@ class CompanyServiceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($companyID,$serviceID)
     {
-        $company = $this->companyRepository->model->find($id);
-        return view('admin.module.company.view',compact('company'));
+        $companyService = $this->companyService->with(['company','service'])
+            ->where('company_id',$companyID)
+            ->where('service_id',$serviceID)
+            ->first()
+        ;
+
+        $durations = $this->serviceRepository->durations_en;
+
+        return view('admin.module.company.service.view',compact('companyService','durations'));
     }
 
     /**
@@ -84,7 +97,26 @@ class CompanyServiceController extends Controller
         $company = $companyRepo->model->find($id);
         $timings = $this->timingRepository->timings;
         $cities = $companyRepo->cities;
-        return view('admin.module.company.edit',compact('company','timings','cities'));
+        $durations = $companyRepo->durations;
+        return view('admin.module.company.edit',compact('company','timings','cities','durations'));
+    }
+
+    public function update(Request $request,$companyID,$serviceID)
+    {
+        $this->validate($request,[
+//            'price'=>'integer'
+        ]);
+
+        $companyService = $this->companyService->with(['company','service'])
+            ->where('company_id',$companyID)
+            ->where('service_id',$serviceID)
+            ->first()
+        ;
+
+        $companyService->update($request->all());
+
+        return redirect()->back()->with('success','Saved');
+
     }
 
     /**
@@ -96,17 +128,24 @@ class CompanyServiceController extends Controller
      */
     public function store(Request $request, $id)
     {
+
+        $this->validate($request,[
+            'service' => 'required|integer|unique:company_services,service_id,null,'.$id.',company_id,'.$id
+        ]);
+
         $company = $this->companyRepository->model->find($id);
 
         // strip duplicates
         $companyServices = $company->services->modelKeys();
 
         // @todo : use sync
-        if ($request->services) {
-            $newServices = collect($request->services)->filter(function ($item) use ($companyServices) {
-                return !in_array($item,$companyServices);
-            })->toArray();
-            $company->services()->attach($newServices);
+        if ($request->service) {
+//            $newServices = collect($request->services)->filter(function ($item) use ($companyServices) {
+//                return !in_array($item,$companyServices);
+//            })->toArray();
+            if(!in_array($request->service,$companyServices)) {
+                $company->services()->attach($request->service,$request->except(['service','_token']));
+            }
         }
 
         return redirect()->back()->with('success','Saved');

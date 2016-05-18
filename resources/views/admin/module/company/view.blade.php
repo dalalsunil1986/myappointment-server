@@ -54,7 +54,7 @@
     </div>
     <div class="panel-footer ">
         <a data-toggle="tooltip" href="{{ action('Admin\CompanyController@edit',$company->id) }}" data-original-title="Edit Company" type="button" class="btn btn-sm btn-warning"><i class="fa fa-2x fa-edit"></i></a>
-        <a href="#" data-link="{{ action('Admin\CompanyController@edit',$company->id) }}" data-target="#deleteModalBox" data-original-title="Delete Company" data-toggle="modal" type="button" class="btn btn-sm btn-danger"><i class="fa fa-2x fa-remove"></i></a>
+        <a href="#" data-link="{{ action('Admin\CompanyController@destroy',$company->id) }}" data-target="#deleteModalBox" data-original-title="Delete Company" data-toggle="modal" type="button" class="btn btn-sm btn-danger"><i class="fa fa-2x fa-remove"></i></a>
     </div>
     @include('admin.partials.delete-modal',['info' => 'This will delete company and related records (employees,services) etc .'])
 

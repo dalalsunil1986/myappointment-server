@@ -37,8 +37,11 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $companies = $this->companyRepository->model->paginate(100);
-        return view('admin.module.company.index',compact('companies'));
+        $companyRepo = $this->companyRepository;
+        $companies = $companyRepo->model->paginate(100);
+        $timings = $this->timingRepository->timings;
+        $cities = $companyRepo->cities;
+        return view('admin.module.company.index',compact('companies','timings','cities'));
     }
 
     /**
@@ -48,6 +51,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
+
     }
 
     /**
@@ -58,7 +62,13 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $companyRepo = $this->companyRepository;
+        $this->validate($request, [
+            'name_en' => 'required|string|unique:companies,name_en'
+        ]);
+        $company = $companyRepo->model->create(array_merge($request->all()));
+
+        return redirect()->action('Admin\CompanyController@show',$company->id)->with('success','Saved');
     }
 
     /**
@@ -100,7 +110,7 @@ class CompanyController extends Controller
         //
         $company = $this->companyRepository->model->find($id);
         $this->validate($request, [
-            'name_en'       => 'required',
+            'name_en' => 'required|string|unique:companies,name_en,'.$id
 //            'cover'          => 'image'
         ]);
 

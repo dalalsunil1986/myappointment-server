@@ -5,25 +5,19 @@
         <h2>
             <a href="/admin">Home</a>
             <i class="fa fa-angle-right"></i>
-            <a href="{{action('Admin\CompanyController@index')}}">Companies</a>
-            <i class="fa fa-angle-right"></i>
-            <a href="{{action('Admin\CompanyController@show',$company->id)}}">{{ $company->name }}</a>
-            <i class="fa fa-angle-right"></i>
             <span>Services</span>
         </h2>
     </div>
 @endsection
 
 @section('left')
-    @include('admin.module.company.service.add',['company'=>$company,'services'=>$services])
-    <hr>
-    @include('admin.module.company.sidebar',['active'=>'services','record'=>$company])
+    @include('admin.module.service.add')
 @endsection
 
 @section('right')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h1>{{ $company->name }} Services</h1>
+            <h1>Services</h1>
         </div>
     </div>
     <div class="panel-body" style="padding: 0;">
@@ -35,14 +29,14 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($company->services as $service)
+            @foreach($services as $service)
                 <tr class="gradeU">
                     <td >
-                        <span class="title"><a href="{{action('Admin\CompanyServiceController@show',[$company->id,$service->id])}}">{{ $service->name }}<a/></span>
+                        <span class="title">{{ $service->name }}</span>
                     </td>
                     <td class="f18">
                         <a href="#" class="red" data-toggle="modal" data-target="#deleteModalBox"
-                           data-link="{{action('Admin\CompanyServiceController@destroy',[$company->id,$service->id])}}">
+                           data-link="{{action('Admin\ServiceController@destroy',[$service->id])}}">
                             <i class="fa fa-close "></i>
                         </a>
                     </td>

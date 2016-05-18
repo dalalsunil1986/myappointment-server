@@ -2,28 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Src\Service\ServiceRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class ServiceController extends Controller
+class UserController extends Controller
 {
-    /**
-     * @var ServiceRepository
-     */
-    private $serviceRepository;
-
-    /**
-     * ServiceController constructor.
-     * @param ServiceRepository $serviceRepository
-     */
-    public function __construct(ServiceRepository $serviceRepository)
-    {
-        $this->serviceRepository = $serviceRepository;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -32,8 +17,6 @@ class ServiceController extends Controller
     public function index()
     {
         //
-        $services = $this->serviceRepository->model->paginate(100);
-        return view('admin.module.service.index',compact('services'));
     }
 
     /**

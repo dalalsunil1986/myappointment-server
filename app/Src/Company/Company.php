@@ -32,6 +32,11 @@ class Company extends BaseModel
         return $this->belongsToMany(Service::class,'company_services')->withPivot(['price','duration_en','description_en'])->withTimestamps()->latest();
     }
 
+    public function service()
+    {
+        return $this->belongsTo(Service::class,'company_services')->withPivot(['price','duration_en','description_en'])->withTimestamps()->latest();
+    }
+
     public function employees()
     {
         return $this->hasMany(Employee::class);

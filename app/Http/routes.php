@@ -44,6 +44,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['web
     Route::resource('companies.services', 'CompanyServiceController');
     Route::resource('companies.appointments', 'CompanyAppointmentController');
     Route::resource('companies', 'CompanyController');
+    Route::resource('services', 'ServiceController');
+    Route::resource('users', 'UserController');
     Route::get('/', 'HomeController@dashboard');
 });
 

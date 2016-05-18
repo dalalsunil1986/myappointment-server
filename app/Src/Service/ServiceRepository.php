@@ -6,6 +6,11 @@ use App\Src\Service\Service;
 
 class ServiceRepository
 {
+
+    public $durations_en = [
+        '30 min', '1 hr', '+1 hr'
+    ];
+
     public $model;
     /**
      * TimingRepository constructor.

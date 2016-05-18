@@ -1,4 +1,4 @@
-@extends('admin.layouts.one-col')
+@extends('admin.layouts.two-col')
 
 @section('breadcrumb')
     <div class="banner">
@@ -10,7 +10,11 @@
     </div>
 @endsection
 
-@section('middle')
+@section('left')
+    @include('admin.module.company.add')
+@endsection
+
+@section('right')
     <div class="panel panel-default">
         <div class="panel-heading">
             <h1>Companies</h1>

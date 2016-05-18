@@ -71,6 +71,20 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ action('Admin\ServiceController@index') }}" class=" hvr-bounce-to-right">
+                            <i class="fa fa-picture-o nav_icon"></i>
+                            <span class="nav-label">Services</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ action('Admin\UserController@index') }}" class=" hvr-bounce-to-right">
+                            <i class="fa fa-picture-o nav_icon"></i>
+                            <span class="nav-label">Users</span>
+                        </a>
+                    </li>
+
                     {{--<li>--}}
                         {{--<a href="#" class=" hvr-bounce-to-right"><i class="fa fa-desktop nav_icon"></i> <span class="nav-label">Pages</span><span class="fa arrow"></span></a>--}}
                         {{--<ul class="nav nav-second-level">--}}
