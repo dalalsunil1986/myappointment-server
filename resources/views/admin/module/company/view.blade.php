@@ -14,6 +14,8 @@
 
 @section('left')
     @include('admin.module.company.sidebar',['active' =>'info', 'record'=>$company])
+    <hr>
+    @include('admin.module.company.edit-form',['active' =>'info', 'company'=>$company,'cities'=>$cities,'timings'=>$timings])
 @endsection
 
 @section('right')

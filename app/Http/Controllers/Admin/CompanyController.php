@@ -64,9 +64,10 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-//        $this->validate($request, [
-//            'name_en' => 'required|string|unique:companies,name_en'
-//        ]);
+        $this->validate($request, [
+            'name_en' => 'required|string|unique:companies,name_en',
+            'image' => 'image'
+        ]);
 
         $uploaded = false;
         $companyRepo = $this->companyRepository->model;
@@ -94,8 +95,12 @@ class CompanyController extends Controller
      */
     public function show($id)
     {
-        $company = $this->companyRepository->model->find($id);
-        return view('admin.module.company.view',compact('company'));
+        $companyRepo = $this->companyRepository;
+        $company = $companyRepo->model->find($id);
+        $timings = $this->timingRepository->timings;
+        $cities = $companyRepo->cities;
+
+        return view('admin.module.company.view',compact('company','cities','timings'));
     }
 
     /**
@@ -129,9 +134,20 @@ class CompanyController extends Controller
             'image'          => 'image'
         ]);
 
-        $company->update(array_merge($request->all()));
+        $uploaded = false;
+
         if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $imageUploader = new ImageUploader();
+            $imageUploader = $imageUploader->upload($file, $company);
+            $uploaded = true;
         }
+
+        $company->update(array_merge(
+            $request->all(),
+            ['image'=> $uploaded ?  url(env('IMAGES_UPLOAD_DIR').env('LARGE_IMAGE_DIR').$imageUploader->getHashedName()) : $company->image]
+        ));
+
         return redirect()->action('Admin\CompanyController@show',$id)->with('success','Saved');
     }
 
