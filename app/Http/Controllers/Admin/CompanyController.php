@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Core\ImageUploader;
 use App\Src\Company\CompanyRepository;
 use App\Src\Timing\TimingRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 
 class CompanyController extends Controller
 {
@@ -62,11 +64,24 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        $companyRepo = $this->companyRepository;
-        $this->validate($request, [
-            'name_en' => 'required|string|unique:companies,name_en'
-        ]);
-        $company = $companyRepo->model->create(array_merge($request->all()));
+//        $this->validate($request, [
+//            'name_en' => 'required|string|unique:companies,name_en'
+//        ]);
+
+        $uploaded = false;
+        $companyRepo = $this->companyRepository->model;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $imageUploader = new ImageUploader();
+            $imageUploader = $imageUploader->upload($file, $companyRepo);
+            $uploaded = true;
+        }
+
+        $company = $companyRepo->create(array_merge(
+            $request->all(),
+            ['image'=> $uploaded ?  url(env('IMAGES_UPLOAD_DIR').env('LARGE_IMAGE_DIR').$imageUploader->getHashedName()) : null]
+        ));
 
         return redirect()->action('Admin\CompanyController@show',$company->id)->with('success','Saved');
     }
@@ -110,16 +125,13 @@ class CompanyController extends Controller
         //
         $company = $this->companyRepository->model->find($id);
         $this->validate($request, [
-            'name_en' => 'required|string|unique:companies,name_en,'.$id
-//            'cover'          => 'image'
+            'name_en' => 'required|string|unique:companies,name_en,'.$id,
+            'image'          => 'image'
         ]);
 
         $company->update(array_merge($request->all()));
-//
-//        if ($request->hasFile('cover')) {
-//            $file = $request->file('cover');
-//            $photoRepository->replace($file, $blog, ['thumbnail' => 1], $id);
-//        }
+        if ($request->hasFile('image')) {
+        }
         return redirect()->action('Admin\CompanyController@show',$id)->with('success','Saved');
     }
 

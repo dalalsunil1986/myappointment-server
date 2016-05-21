@@ -25,11 +25,11 @@ class CreateCompaniesTable extends Migration
             $table->string('longitude')->nullable();
             $table->string('latitudeDelta')->nullable();
             $table->string('longitudeDelta')->nullable();
-            $table->string('image')->nullable();
             $table->string('facebook')->nullable();
             $table->string('twitter')->nullable();
             $table->string('snapchat')->nullable();
             $table->string('instagram')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
         });
     }

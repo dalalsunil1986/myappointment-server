@@ -1,6 +1,6 @@
 <div>
     <h1>Add Company</h1>
-    {!! Form::open(['action' => ['Admin\CompanyController@store'], 'method' => 'post'], ['class'=>'']) !!}
+    {!! Form::open(['action' => ['Admin\CompanyController@store'], 'method' => 'post','files'=>true], ['class'=>'']) !!}
     <div class="form-group">
         <label for="companyName">Company Name</label>
         {!! Form::text('name_en',null,['class'=>'form-control','placeholder'=>'Company Name']) !!}
@@ -30,6 +30,11 @@
     <div class="form-group">
         <label for="companyAddress">Weekly holiday</label>
         {!! Form::text('holidays',null,['class'=>'form-control','placeholder'=>'Weekly Holiday (ex: Friday afternoon']) !!}
+    </div>
+
+    <div class="form-group">
+        <label for="image">Company Logo</label>
+        <input name="image" type="file" id="image">
     </div>
 
     <div class="form-group">

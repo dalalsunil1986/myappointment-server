@@ -5,7 +5,7 @@ use Exception;
 use Intervention\Image\Facades\Image;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-abstract class BaseImageService extends BaseRepository
+abstract class BaseImageService
 {
 
     private $uploadDir;
@@ -18,22 +18,18 @@ abstract class BaseImageService extends BaseRepository
 
     protected $largeImageWidth = '750';
 
-    protected $largeImageHeight = '700';
-
     protected $mediumImageWidth = '500';
-
-    protected $mediumImageHeight = '450';
 
     protected $thumbnailImageWidth = '250';
 
-    protected $thumbnailImageHeight = '200';
+    protected $hashedName;
 
     public function __construct()
     {
-        $this->uploadDir          = public_path() . '/uploads/';
-        $this->largeImagePath     = $this->getUploadDir() . 'large/';
-        $this->mediumImagePath    = $this->getUploadDir() . 'medium/';
-        $this->thumbnailImagePath = $this->getUploadDir() . 'thumbnail/';
+        $this->uploadDir          = public_path().env('IMAGES_UPLOAD_DIR');
+        $this->largeImagePath     = $this->getUploadDir() . env('LARGE_IMAGE_DIR');
+        $this->mediumImagePath    = $this->getUploadDir() . env('MEDIUM_IMAGE_DIR');
+        $this->thumbnailImagePath = $this->getUploadDir() . env('THUMBNAIL_IMAGE_DIR');
     }
 
     abstract function store(UploadedFile $image);
@@ -46,15 +42,21 @@ abstract class BaseImageService extends BaseRepository
             switch ($imageDimension) {
                 case 'large':
                     Image::make($image->getRealPath())->resize($this->largeImageWidth,
-                        $this->largeImageHeight)->save($this->largeImagePath . $this->hashedName);
+                        null,function($constraint) {
+                            $constraint->aspectRatio();
+                        })->save($this->largeImagePath . $this->hashedName);
                     break;
                 case 'medium':
                     Image::make($image->getRealPath())->resize($this->mediumImageWidth,
-                        $this->mediumImageHeight)->save($this->mediumImagePath . $this->hashedName);
+                        null,function($constraint) {
+                            $constraint->aspectRatio();
+                        })->save($this->mediumImagePath . $this->hashedName);
                     break;
                 case 'thumbnail':
                     Image::make($image->getRealPath())->resize($this->thumbnailImageWidth,
-                        $this->thumbnailImageHeight)->save($this->thumbnailImagePath . $this->hashedName);
+                        null,function($constraint) {
+                            $constraint->aspectRatio();
+                        })->save($this->thumbnailImagePath . $this->hashedName);
                     break;
                 default :
                     break;
@@ -107,6 +109,17 @@ abstract class BaseImageService extends BaseRepository
         if (file_exists($this->getLargeImagePath() . $name)) {
             unlink($this->getLargeImagePath() . $name);
         }
+    }
+
+    public function getHashedName()
+    {
+        return $this->hashedName;
+    }
+
+    public function setHashedName($file)
+    {
+        $this->hashedName = md5(uniqid(rand() * (time()))) . '.' . $file->getClientOriginalExtension();
+        return $this;
     }
 
 }

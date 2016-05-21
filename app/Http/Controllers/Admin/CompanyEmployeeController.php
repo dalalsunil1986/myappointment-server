@@ -59,10 +59,11 @@ class CompanyEmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($companyID,$employeeID)
     {
-        $company = $this->companyRepository->model->find($id);
-        return view('admin.module.company.view',compact('company'));
+        $company = $this->companyRepository->model->find($companyID);
+        $employee = $this->employeeRepository->find($employeeID);
+        return view('admin.module.company.employee.view',compact('company','employee'));
     }
 
     /**
@@ -71,13 +72,22 @@ class CompanyEmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($companyID, $employeeID)
     {
-        $companyRepo = $this->companyRepository;
-        $company = $companyRepo->model->find($id);
-        $timings = $this->timingRepository->timings;
-        $cities = $companyRepo->cities;
-        return view('admin.module.company.edit',compact('company','timings','cities'));
+        $company = $this->companyRepository->model->find($companyID);
+        $employee = $this->employeeRepository->find($employeeID);
+        return view('admin.module.company.edit',compact('company','employee'));
+    }
+
+    public function update(Request $request,$companyID,$employeeID)
+    {
+        //@todo : allow if other companies has the same employee name // bug only while updating
+        $this->validate($request,[
+            'name_en' => 'required|string|unique:employees,name_en,'.$employeeID
+        ]);
+        $employee = $this->employeeRepository->find($employeeID);
+        $employee->update($request->all());
+        return redirect()->back()->with('success','Saved');
     }
 
     /**

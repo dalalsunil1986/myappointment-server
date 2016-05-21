@@ -38,7 +38,7 @@
             @foreach($company->employees as $employee)
                 <tr class="gradeU">
                     <td >
-                        <span class="title">{{ $employee->name }}</span>
+                        <span class="title"><a href="{{ action('Admin\CompanyEmployeeController@show',[$company->id,$employee->id]) }}">{{ $employee->name }}</a></span>
                     </td>
                     <td class="f18">
                         <a href="#" class="red" data-toggle="modal" data-target="#deleteModalBox"

@@ -55,6 +55,11 @@ class ServiceController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request,[
+           'name_en' => 'string|required|unique:services,name_en'
+        ]);
+        $service = $this->serviceRepository->model->create($request->all());
+        return redirect()->action('Admin\ServiceController@show',$service->id);
     }
 
     /**
@@ -65,7 +70,8 @@ class ServiceController extends Controller
      */
     public function show($id)
     {
-        //
+        $service = $this->serviceRepository->model->find($id);
+        return view('admin.module.service.view',compact('service'));
     }
 
     /**
@@ -89,6 +95,12 @@ class ServiceController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $this->validate($request,[
+            'name_en' => 'string|required|unique:services,name_en,'.$id
+        ]);
+        $serviceRepo = $this->serviceRepository->model->find($id);
+        $serviceRepo->update($request->all());
+        return redirect()->back()->with('success','Saved');
     }
 
     /**
