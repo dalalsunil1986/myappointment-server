@@ -15,6 +15,11 @@
 @section('left')
     @include('admin.module.company.sidebar',['active' =>'info', 'record'=>$company])
     <hr>
+    <div class="panel-heading">
+        <h1>
+            Edit : {{ $company->name }}
+        </h1>
+    </div>
     @include('admin.module.company.edit-form',['active' =>'info', 'company'=>$company,'cities'=>$cities,'timings'=>$timings])
 @endsection
 

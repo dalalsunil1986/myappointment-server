@@ -21,16 +21,22 @@ class CompanyController extends Controller
      * @var TimingRepository
      */
     private $timingRepository;
+    /**
+     * @var ImageUploader
+     */
+    private $imageUploader;
 
     /**
      * CompanyController constructor.
      * @param CompanyRepository $repository
      * @param TimingRepository $timingRepository
+     * @param ImageUploader $imageUploader
      */
-    public function __construct(CompanyRepository $repository, TimingRepository $timingRepository)
+    public function __construct(CompanyRepository $repository, TimingRepository $timingRepository, ImageUploader $imageUploader)
     {
         $this->companyRepository = $repository;
         $this->timingRepository = $timingRepository;
+        $this->imageUploader = $imageUploader;
     }
     /**
      * Display a listing of the resource.
@@ -74,8 +80,7 @@ class CompanyController extends Controller
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $imageUploader = new ImageUploader();
-            $imageUploader = $imageUploader->upload($file, $companyRepo);
+            $imageUploader = $this->imageUploader->upload($file, $companyRepo);
             $uploaded = true;
         }
 
@@ -138,8 +143,7 @@ class CompanyController extends Controller
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $imageUploader = new ImageUploader();
-            $imageUploader = $imageUploader->upload($file, $company);
+            $imageUploader = $this->imageUploader->upload($file, $company);
             $uploaded = true;
         }
 
