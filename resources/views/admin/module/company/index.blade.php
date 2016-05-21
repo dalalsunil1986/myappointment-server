@@ -10,6 +10,41 @@
     </div>
 @endsection
 
+@section('js')
+    @parent
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script src="/adminpanel/js/address.picker.js"></script>
+    <script>
+        $(function () {
+            var latitude = '{{ '29.357' }}';
+            var longitude = '{{ '47.951' }}';
+
+            get_map(latitude, longitude);
+
+            var addresspickerMap = $("#addresspicker_map").addresspicker({
+                updateCallback: showCallback,
+                elements: {
+                    map: "#map",
+                    lat: "#latitude",
+                    lng: "#longitude"
+                }
+            });
+
+            var gmarker = addresspickerMap.addresspicker("marker");
+            gmarker.setVisible(true);
+            addresspickerMap.addresspicker("updatePosition");
+
+            $('#reverseGeocode').change(function () {
+                $("#addresspicker_map").addresspicker("option", "reverseGeocode", ($(this).val() === 'true'));
+            });
+
+            function showCallback(geocodeResult, parsedGeocodeResult) {
+                $('#callback_result').text(JSON.stringify(parsedGeocodeResult, null, 4));
+            }
+        });
+    </script>
+@endsection
+
 @section('left')
     @include('admin.module.company.add')
 @endsection

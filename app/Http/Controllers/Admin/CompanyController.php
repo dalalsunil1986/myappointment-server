@@ -6,10 +6,7 @@ use App\Core\ImageUploader;
 use App\Src\Company\CompanyRepository;
 use App\Src\Timing\TimingRepository;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Intervention\Image\Facades\Image;
 
 class CompanyController extends Controller
 {
