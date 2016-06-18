@@ -13,7 +13,7 @@
 
 $factory->define(\App\Src\User\User::class, function (Faker\Generator $faker) {
     return [
-        'name_en' => $faker->firstName,
+        'name' => $faker->firstName,
         'email' => $faker->email,
         'password' => bcrypt('password'),
         'api_token' => str_random(60),

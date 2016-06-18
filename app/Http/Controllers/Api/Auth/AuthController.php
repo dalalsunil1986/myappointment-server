@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Src\User\AuthManager;
 use App\Src\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,15 +32,19 @@ class AuthController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
+    /**
+     * @var User
+     */
+    private $userRepository;
 
     /**
      * Create a new authentication controller instance.
-     *
-     * @return void
+     * @param User $userRepository
      */
-    public function __construct()
+    public function __construct(User $userRepository)
     {
         $this->middleware('guest', ['except' => 'logout']);
+        $this->userRepository = $userRepository;
     }
 
     public function loginUsingToken(Request $request)
@@ -76,9 +81,11 @@ class AuthController extends Controller
     public function postRegister(Request $request)
     {
 
-        $validator = Validator::make($request->json()->all(), [
+        $params = array_map('trim', $request->json()->all());
+
+        $validator = Validator::make($params, [
             'name' => 'required|alpha',
-            'mobile' => 'required|digits:8|numeric|unique:users,mobile|',
+            'mobile' => 'required|digits:8|numeric|unique:users,mobile',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|max:255|min:5',
         ]);
@@ -89,30 +96,28 @@ class AuthController extends Controller
                 'message' => 'Validation failed',
                 'error' => $validator->errors()->all()
             ]);
-        } else {
-            return response()->json(['success' => true]);
-        }
-
-        $user = $this->userRepository->model->create([
-            'name' => strtolower($request->json('name')),
-            'email' => strtolower($request->json('email')),
-            'mobile' => (int)$request->json('mobile'),
-            'password' => bcrypt($request->json('password')),
-            'active' => 1
-        ]);
+        } 
 
         try {
-//            event(new UserRegistered($user));
+            $user = $this->userRepository->create([
+                'name' => $request->json('name'),
+                'email' => strtolower($request->json('email')),
+                'mobile' => (int)$request->json('mobile'),
+                'password' => bcrypt($request->json('password')),
+                'active' => 1
+            ]);
+            //            event(new UserRegistered($user));
             return response()->json([
                 'success' => true,
                 'data' => $user
             ], 200);
 
-
         } catch (\Exception $e) {
-            $user->delete();
             return response()->json(['success' => false, 'message' => $e->getMessage()], 401);
         }
+
+
+
 
     }
 

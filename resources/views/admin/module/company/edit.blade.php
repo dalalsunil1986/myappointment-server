@@ -22,13 +22,10 @@
 @section('middle')
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h1>
-                Edit : {{ $company->name }}
-            </h1>
+            <h1> Edit : {{ $company->name }} </h1>
         </div>
     </div>
     <div class="panel-body" style="padding: 0 0 15px 0">
         @include('admin.module.company.edit-form',['company'=>$company,'cities'=>$cities,'timings'=>$timings])
     </div>
-
 @endsection

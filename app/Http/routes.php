@@ -48,7 +48,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin', 'middleware' => ['web
     Route::resource('users', 'UserController');
     Route::get('/', 'HomeController@dashboard');
 });
-
+    
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
     Route::get('/', 'HomeController@index');

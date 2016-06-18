@@ -1,4 +1,6 @@
+<link href="/adminpanel/css/jquery-ui/all.css" rel="stylesheet">
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="/adminpanel/js/jquery-ui.min.js"> </script>
 <script src="/adminpanel/js/address.picker.js"></script>
 <script>
     var latitude = '{{ is_object($record) && isset($record->latitude)  ? $record->latitude : '29.357' }}';
@@ -18,8 +20,6 @@
             lng:      "#longitude",
         }
     });
-
-
 
     var gmarker = addresspickerMap.addresspicker( "marker");
     gmarker.setVisible(true);

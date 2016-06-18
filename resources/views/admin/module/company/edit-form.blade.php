@@ -1,5 +1,6 @@
+{!! Form::model($company,['action' => ['Admin\CompanyController@update',$company->id], 'method' => 'patch', 'files'=>true], ['class'=>'']) !!}
+
 <div class="grid-form1">
-    {!! Form::model($company,['action' => ['Admin\CompanyController@update',$company->id], 'method' => 'patch', 'files'=>true], ['class'=>'']) !!}
 
     <div class="form-group">
         <label for="companyName">Company Name</label>
@@ -13,10 +14,11 @@
         <label for="city">City</label>
         @include('admin.partials.form-dropdown',['selected'=>$company->city_en,'items'=>$cities, 'name'=>'city_en'])
     </div>
+
     <div class="form-group">
+        <label for="companyAddress">Company Address</label>
         <div class="map-wrapper">
             <div id="map" style="height: 400px;"></div>
-            <label for="companyAddress">Company Address</label>
             <div class="small">You can drag and drop the marker to the correct location</div>
             {!! Form::textarea('address_en',null,['id'=>'addresspicker_map','class'=>'form-control','placeholder'=>'Type the Street Address or drag and drop the map marker to the correct location','rows'=>2]) !!}
             {{ Form::hidden('latitude',null, array('id' => 'latitude')) }}
@@ -75,8 +77,7 @@
 
     <div class="form-group">
         <button type="submit" class="btn btn-success" style="width: 100%">Save</button>
-        {!! Form::close() !!}
     </div>
 
-    {!! Form::close() !!}
 </div>
+{!! Form::close() !!}

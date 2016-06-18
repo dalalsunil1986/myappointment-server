@@ -9,9 +9,7 @@
     @section('css')
         <link href="/adminpanel/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
         <link href="/adminpanel/css/font-awesome.css" rel="stylesheet">
-        <link href="/adminpanel/css/jquery-ui/all.css" rel="stylesheet">
         <link href="/node_modules/select2/dist/css/select2.min.css" rel="stylesheet">
-        <link href="/adminpanel/css/select2.bootstrap.css" rel="stylesheet">
         <link href="/adminpanel/css/style.css" rel='stylesheet' type='text/css' />
         <link href="/adminpanel/css/custom.css" rel="stylesheet">
     @show
@@ -50,7 +48,6 @@
 <!---->
 @section('js')
     <script src="/adminpanel/js/jquery.min.js"> </script>
-    <script src="/adminpanel/js/jquery-ui.min.js"> </script>
     <script src="/adminpanel/js/bootstrap.min.js"> </script>
     <script src="/adminpanel/js/jquery.metisMenu.js"></script>
     <script src="/adminpanel/js/jquery.slimscroll.min.js"></script>
@@ -70,7 +67,6 @@
                 $("#deleteModal").attr("action", link);
             }
         });
-
     </script>
 
 @show
