@@ -42,7 +42,7 @@ class ProfileController extends Controller
         if($user) {
             $appointments = $this->appointmentRepository->with([
                 'user','company','employee','timing','service'
-            ])->where('user_id',$user->id)->get();
+            ])->where('user_id',$user->id)->where('date','>',Carbon::now())->get();
             foreach($appointments as $app) {
                 $app->load('pivot');
             }
