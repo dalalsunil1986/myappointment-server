@@ -68,7 +68,7 @@
             <tbody>
             @foreach($appointments as $appointment)
                 <tr class="gradeU">
-                    <td ><span class="title">{{ $appointment->user->name_en }}</span></td>
+                    <td ><span class="title">{{ $appointment->user->name }}</span></td>
                     <td ><span class="title">{{ $appointment->service->name }}</span></td>
                     <td ><span class="title">{{ $appointment->employee->name }}</span></td>
                     <td ><span class="title">{{ $appointment->date }}</span></td>

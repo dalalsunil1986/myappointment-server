@@ -31,7 +31,7 @@
             @foreach($users as $user)
                 <tr class="gradeU">
                     <td>
-                        <a href="{{ action('Admin\UserController@show',$user->id)}}">{{ $user->name_en }} </a>
+                        <a href="{{ action('Admin\UserController@show',$user->id)}}">{{ $user->name }} </a>
                     </td>
                     <td class="f18">{{ $user->email }}</td>
                     <td class="f18">{{ $user->created_at->format('d-m-Y') }}</td>
