@@ -77,6 +77,7 @@ $factory->define(\App\Src\Appointment\Appointment::class, function (Faker\Genera
         'timing_id' => 1,
         'employee_id' => 1,
         'status' => 'confirmed',
+        'date' => $faker->dateTimeBetween('now','+1 year')
     ];
 });
 
